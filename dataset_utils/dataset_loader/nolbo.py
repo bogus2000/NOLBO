@@ -136,12 +136,10 @@ class nolboDataset(object):
                     rowMin = int(np.max((0.0, rowMin)) * self._nolboConfig['inputImgDim'][0])
                     colMax = int(np.min((1.0, colMax)) * self._nolboConfig['inputImgDim'][1])
                     colMin = int(np.max((0.0, colMin)) * self._nolboConfig['inputImgDim'][1])
-                    imageCanvas = np.zeros(
-                        shape=self._nolboConfig['inputImgDim'])
+                    imageCanvas = np.zeros(shape=self._nolboConfig['inputImgDim'])
                     imageCanvas[rowMin:rowMax, colMin:colMax] = inputImage[rowMin:rowMax, colMin:colMax]
                     imageCanvas = cv2.normalize(imageCanvas, imageCanvas, alpha=0.0, beta=1.0, norm_type=cv2.NORM_MINMAX,
                                                dtype=cv2.CV_32FC1)
-                    # print inputImage.shape
                     imageCanvas = imageCanvas.reshape(self._nolboConfig['inputImgDim'])
                     imageCanvas = self._imageAugmentation(imageCanvas)
 
@@ -154,12 +152,12 @@ class nolboDataset(object):
                     objHpr = [float(heading), float(pitch), float(roll)]
 #                     obj3DShape = np.loadtxt(os.path.join(voxelPath, str(checkedObjNumCurr) + '.txt'), np.float32)
 #                     obj3DShape = pandas.read_csv(os.path.join(voxelPath, str(checkedObjNumCurr) + '.txt'),delimiter=' ', dtype=float, header=None)
-                    obj3DShape = pandas.read_hdf(dataPath+'.hdf', 'voxel3D')
+                    obj3DShape = pandas.read_hdf(os.path.join(voxelPath, str(checkedObjNumCurr)+'.hdf'), 'voxel3D')
                     obj3DShape = np.array(obj3DShape)
                     obj3DShape = np.reshape(obj3DShape, self._nolboConfig['decoderStructure']['outputImgDim'])
                     if outputOrg==True:                        
 #                         obj3DShapeOrg = pandas.read_csv(os.path.join(voxelPath, str(checkedObjNumCurr) + '_org.txt'),delimiter=' ', dtype=float, header=None)
-                        obj3DShape = pandas.read_hdf(dataPath+'_org.hdf', 'voxel3D')
+                        obj3DShapeOrg = pandas.read_hdf(os.path.join(voxelPath, str(checkedObjNumCurr)+'_org.hdf', 'voxel3D')
                         obj3DShapeOrg = np.array(obj3DShapeOrg)
                         obj3DShapeOrg = np.reshape(obj3DShapeOrg, self._nolboConfig['decoderStructure']['outputImgDim'])
                         outputImagesOrg.append(obj3DShapeOrg)
@@ -272,7 +270,7 @@ class nolboDataset(object):
 #                         obj3DShape = np.loadtxt(os.path.join(voxelPath, str(outputImageIdx)+'.txt'), np.float32)
 #                         obj3DShape = np.reshape(obj3DShape, self._nolboConfig['decoderStructure']['outputImgDim'])
                         if outputOrg==True:
-                            obj3DShape = pandas.read_hdf(os.path.join(voxelPath, str(outputImageIdx)+'_org.hdf'), 'voxel3D')
+                            obj3DShapeOrg = pandas.read_hdf(os.path.join(voxelPath, str(outputImageIdx)+'_org.hdf'), 'voxel3D')
 #                             obj3DShapeOrg = pandas.read_csv(os.path.join(voxelPath, str(outputImageIdx)+'_org.txt'), delimiter=' ', dtype=float, header=None)
                             obj3DShapeOrg = np.array(obj3DShapeOrg)
                             obj3DShapeOrg = np.reshape(obj3DShapeOrg, self._nolboConfig['decoderStructure']['outputImgDim'])
