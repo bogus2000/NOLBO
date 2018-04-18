@@ -26,6 +26,7 @@ class darknet19_core(object):
         print hiddenP.shape
         return hiddenP
     def __call__(self, inputImg):
+        print "darknet19_core - "+self._nameScope
         with tf.variable_scope(self._nameScope, reuse=self._reuse):
             hiddenC1 = self._conv(inputs=inputImg, filters=32, kernel_size=3)
             hiddenP1 = self._maxPool(inputs=hiddenC1)
@@ -76,9 +77,11 @@ class encoder_singleVectorOutput(object):
         self.saver = None
         self._darknetCore = None
     def __call__(self, inputImg):
+        print "encoder_singleVectorOutput - "+self._nameScope
         self._darknetCore = darknet19_core(activation=self._coreAct, bnPhase=self._bnPhase, nameScope=self._nameScope+"DKCore",reuse=self._reuse,trainable=self._trainable)
         hidden = self._darknetCore(inputImg)
         with tf.variable_scope(self._nameScope+'LastConv', reuse=self._reuse):
+            print "encoder_singleVectorOutput_lastLayer - "+self._nameScope
             hidden = tf.layers.conv2d(inputs=hidden, filters=self._outputVectorDim, kernel_size=1, strides=1, padding='same', activation=None, trainable=self._trainable, use_bias=True)
             hidden = tf.reduce_mean(hidden, axis=[1,2])
             if self._lastAct!=None:
@@ -107,9 +110,11 @@ class encoder_gridOutput(object):
         self._lastAct = lastLayerActivation
         self._darknetCore = None
     def __call__(self, inputImg):
+        print "encoder_gridOutput - " + self._nameScope
         self._darknetCore = darknet19_core(activation=self._coreAct, bnPhase=self._bnPhase, nameScope=self._nameScope+"DKCore",reuse=self._reuse,trainable=self._trainable)
         hidden = self._darknetCore(inputImg)
         with tf.variable_scope(self._nameScope+"LastConv", reuse=self._reuse):
+            print "encoder_gridOutput_lastLayer - " + self._nameScope
             hidden = tf.layers.conv2d(inputs=hidden,filters=self._lastLCN, activation=self._lastAct, kernel_size=1, strides=1, padding='same', use_bias=True)
             print hidden.shape
         self._reuse=True

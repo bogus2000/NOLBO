@@ -3,6 +3,7 @@ import tensorflow as tf
 import cv2
 import time
 import os, random, re, pickle
+import pandas
 import dataset_utils.datasetUtils as datasetUtils
 
 ###example of nolboConfig for nolboDataset
@@ -27,9 +28,10 @@ import dataset_utils.datasetUtils as datasetUtils
 # }
 
 class nolboDataset(object):
-    def __init__(self, datasetPath, nolboConfig):
+    def __init__(self, datasetPath, nolboConfig, mode=None):
         self._datasetPath = datasetPath
         self._nolboConfig = nolboConfig
+        self._mode = mode
         self._dataStart = 0
         self._dataLength = 0
         self._epoch = 0
@@ -46,7 +48,7 @@ class nolboDataset(object):
         houseList.sort(key=datasetUtils.natural_keys)
         houseNum = 0
         for house in houseList:
-            print houseNum, house
+            print houseNum, "houseId :", house, '\r',
             houseNum += 1
             housePath = os.path.join(self._datasetPath, house)
             roomList = os.listdir(housePath)
@@ -70,11 +72,13 @@ class nolboDataset(object):
                                 voxelPath = os.path.join(voxel3DPath, voxel3DList[viewIdx])
                                 dataPath = [depthPath, objifPath, voxelPath]
                                 self._dataPathList.append(dataPath)
+            del roomList
         self._dataLength = len(self._dataPathList)
-        print 'done!'
+        print ''
         
     def _dataPathShuffle(self):
         print 'data path shuffle...'
+        self._dataStart = 0
         random.shuffle(self._dataPathList)
         print 'done!'
     def printDataPath(self):
@@ -82,16 +86,127 @@ class nolboDataset(object):
             if i%10 == 0 or i==len(self._dataPathList)-1:
                 print 'dataNum', i
                 print self._dataPathList[i]
-    def getNextBatch(self, maximumBatchSize):
-        print 'get next batch data...'
+
+    def setMode(self, mode=None):
+        self._mode = mode
+        self._epoch = 0
+        self._dataPathShuffle()
+
+    def getNextBatch(self, batchSize, outputOrg = False):
+        if self._mode == 'multiObject':
+            return self._getNextBatchMultiObject(maximumBatchSize=batchSize, outputOrg=outputOrg)
+        elif self._mode == 'singleObject':
+            return self._getNextBatchSingleObject(batchSize=batchSize, outputOrg=outputOrg)
+        else:
+            print "mode should be 'multiObject' or singleObject'"
+
+    def _getNextBatchSingleObject(self, batchSize, outputOrg=False):
+        checkedDataPathNum = 0
+        addedObjNumTotal = 0
+        # orgImages = []
+        inputImages = []
+        classList, instList, EulerAngle = [], [], []
+        outputImages = []
+        outputImagesOrg = []
+        if self._dataStart + batchSize >= self._dataLength:
+            self._epoch += 1
+            self._dataPathShuffle()
+        for dataPath in self._dataPathList[self._dataStart:]:
+            if addedObjNumTotal >= batchSize:
+                break
+            depthPath, objifPath, voxelPath = dataPath
+            with open(objifPath) as fPointer:
+                objifs = fPointer.readlines()
+            inputImage = cv2.imread(depthPath, 0)
+            inputImage = cv2.resize(inputImage,
+                                    (self._nolboConfig['inputImgDim'][1], self._nolboConfig['inputImgDim'][0]))
+            inputImage = inputImage.reshape(self._nolboConfig['inputImgDim'])
+            addedObjNumCurr = 0
+            checkedObjNumCurr = 0
+            for objif in objifs:
+#                 print objif
+                objShapePath, objClass, objNYUClass, rowMin, rowMax, colMin, colMax, heading, pitch, roll = objif.split(" ")
+                objShapePath = os.path.join(*(objShapePath.split('/')[6:]))
+                rowMax, rowMin = float(rowMax), float(rowMin)
+                colMax, colMin = float(colMax), float(colMin)
+                bboxHeight = np.min((1.0, rowMax)) - np.max((0.0, rowMin))
+                bboxWidth = np.min((1.0, colMax)) - np.max((0.0, colMin))
+                if bboxHeight > 0.2 and bboxWidth>0.2:
+                    rowMax = int(np.min((1.0, rowMax)) * self._nolboConfig['inputImgDim'][0])
+                    rowMin = int(np.max((0.0, rowMin)) * self._nolboConfig['inputImgDim'][0])
+                    colMax = int(np.min((1.0, colMax)) * self._nolboConfig['inputImgDim'][1])
+                    colMin = int(np.max((0.0, colMin)) * self._nolboConfig['inputImgDim'][1])
+                    imageCanvas = np.zeros(
+                        shape=self._nolboConfig['inputImgDim'])
+                    imageCanvas[rowMin:rowMax, colMin:colMax] = inputImage[rowMin:rowMax, colMin:colMax]
+                    imageCanvas = cv2.normalize(imageCanvas, imageCanvas, alpha=0.0, beta=1.0, norm_type=cv2.NORM_MINMAX,
+                                               dtype=cv2.CV_32FC1)
+                    # print inputImage.shape
+                    imageCanvas = imageCanvas.reshape(self._nolboConfig['inputImgDim'])
+                    imageCanvas = self._imageAugmentation(imageCanvas)
+
+                    objClass, objInst = self._objClassAndInst[objShapePath]
+                    objClassVector = [0] * self._nolboConfig['classDim']
+                    objInstVector = [0] * self._nolboConfig['instDim']
+                    # print objClass, objInst
+                    objClassVector[objClass] = 1
+                    objInstVector[objInst] = 1
+                    objHpr = [float(heading), float(pitch), float(roll)]
+#                     obj3DShape = np.loadtxt(os.path.join(voxelPath, str(checkedObjNumCurr) + '.txt'), np.float32)
+#                     obj3DShape = pandas.read_csv(os.path.join(voxelPath, str(checkedObjNumCurr) + '.txt'),delimiter=' ', dtype=float, header=None)
+                    obj3DShape = pandas.read_hdf(dataPath+'.hdf', 'voxel3D')
+                    obj3DShape = np.array(obj3DShape)
+                    obj3DShape = np.reshape(obj3DShape, self._nolboConfig['decoderStructure']['outputImgDim'])
+                    if outputOrg==True:                        
+#                         obj3DShapeOrg = pandas.read_csv(os.path.join(voxelPath, str(checkedObjNumCurr) + '_org.txt'),delimiter=' ', dtype=float, header=None)
+                        obj3DShape = pandas.read_hdf(dataPath+'_org.hdf', 'voxel3D')
+                        obj3DShapeOrg = np.array(obj3DShapeOrg)
+                        obj3DShapeOrg = np.reshape(obj3DShapeOrg, self._nolboConfig['decoderStructure']['outputImgDim'])
+                        outputImagesOrg.append(obj3DShapeOrg)
+                    
+                    outputImages.append(obj3DShape)
+                    classList.append(objClassVector)
+                    instList.append(objInstVector)
+                    EulerAngle.append(objHpr)
+                    inputImages.append(imageCanvas)
+                    # orgImages.append(inputImage)
+                    addedObjNumTotal += 1
+                checkedObjNumCurr +=1
+                if addedObjNumTotal >= batchSize:
+                    break
+            checkedDataPathNum += 1
+        self._dataStart += checkedDataPathNum
+        # orgImages = np.array(orgImages)
+        inputImages = np.array(inputImages)
+        outputImages = np.array(outputImages)
+        outputImagesOrg = np.array(outputImagesOrg)
+        classList = np.array(classList)
+        instList = np.array(instList)
+        EulerAngle = np.array(EulerAngle)
+        batchDict = {
+            # 'orgImages': orgImages,
+            'inputImages': inputImages,
+            'outputImages': outputImages,
+            'outputImagesOrg': outputImagesOrg,
+            'classList': classList,
+            'instList': instList,
+            'EulerAngle': EulerAngle
+        }
+        return batchDict
+#         return None
+
+
+    def _getNextBatchMultiObject(self, maximumBatchSize, outputOrg=False):
+        # print 'get next batch data...'
         self._gridSize = [self._nolboConfig['inputImgDim'][0]/2**self._nolboConfig['maxPoolNum'], 
                           self._nolboConfig['inputImgDim'][1]/2**self._nolboConfig['maxPoolNum']]
         batchSize = 0
         addedDataPathNum = 0
         inputImages, bboxHWXY, objectness = [],[],[]
         outputImages, classList, instList, EulerAngle = [],[],[],[]
+        outputImagesOrg = []
         if self._dataStart + maximumBatchSize >= self._dataLength:
-            self._dataStart = 0
+            self._epoch += 1
             self._dataPathShuffle()
         for dataPath in self._dataPathList[self._dataStart:]:
             depthPath, objifPath, voxelPath = dataPath
@@ -104,7 +219,8 @@ class nolboDataset(object):
                 # print depthPath
                 inputImage = cv2.imread(depthPath, 0)
                 # print inputImage.shape
-                inputImage = cv2.resize(inputImage, (self._nolboConfig['inputImgDim'][0], self._nolboConfig['inputImgDim'][1]))
+                inputImage = cv2.resize(inputImage,
+                                        (self._nolboConfig['inputImgDim'][1], self._nolboConfig['inputImgDim'][0]))
                 # print inputImage.shape
                 inputImage = cv2.normalize(inputImage, inputImage, alpha=0.0, beta=1.0, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_32FC1)
                 # print inputImage.shape
@@ -118,34 +234,54 @@ class nolboDataset(object):
                     # print objif
                     objShapePath, objClass, objNYUClass, rowMin, rowMax, colMin, colMax, heading, pitch, roll = objif.split(" ")
                     objShapePath = os.path.join(*(objShapePath.split('/')[6:]))
+
+                    rowMin, rowMax = np.max((0.0, float(rowMin))), np.min((1.0, float(rowMax)))
+                    colMin, colMax = np.max((0.0, float(colMin))), np.min((1.0, float(colMax)))
+
                     rowCenter = (float(rowMax) + float(rowMin))/2.0
                     colCenter = (float(colMax) + float(colMin))/2.0
-                    rowCenter = np.max((np.min((rowCenter, 1.0-1e-10)), 0.0)) * self._gridSize[0]
-                    colCenter = np.max((np.min((colCenter, 1.0-1e-10)), 0.0)) * self._gridSize[1]
+                    rowCenter = np.max((np.min((rowCenter, 1.0-1e-10)), 0.0)) * float(self._gridSize[0])
+                    colCenter = np.max((np.min((colCenter, 1.0-1e-10)), 0.0)) * float(self._gridSize[1])
                     rowIdxInGrid, colIdxInGrid = int(rowCenter), int(colCenter)
                     dx, dy = colCenter - colIdxInGrid, rowCenter - rowIdxInGrid
-                    bboxHeight = np.min((1.0, float(colMax)))-np.max((0.0, float(colMin)))
-                    bboxWidth = np.min((1.0, float(rowMax)))-np.max((0.0, float(rowMin)))
+                    bboxHeight = np.min((1.0, float(rowMax)))-np.max((0.0, float(rowMin)))
+                    bboxWidth = np.min((1.0, float(colMax)))-np.max((0.0, float(colMin)))
+                    isObjMarked = False
                     for predictorIdx in range(self._nolboConfig['predictorNumPerGrid']):
-                        if objectnessImage[rowIdxInGrid,colIdxInGrid, predictorIdx, 0] == 0:
+                        if objectnessImage[rowIdxInGrid,colIdxInGrid, predictorIdx, 0] != 1:
                             objectnessImage[rowIdxInGrid,colIdxInGrid, predictorIdx, 0] = 1
                             bboxHWXYImage[rowIdxInGrid,colIdxInGrid, predictorIdx, 0] = bboxHeight
                             bboxHWXYImage[rowIdxInGrid,colIdxInGrid, predictorIdx, 1] = bboxWidth
                             bboxHWXYImage[rowIdxInGrid,colIdxInGrid, predictorIdx, 2] = dx
                             bboxHWXYImage[rowIdxInGrid,colIdxInGrid, predictorIdx, 3] = dy
-                    objClass, objInst = self._objClassAndInst[objShapePath]                    
-                    objClassVector = [0]*30
-                    objInstVector = [0]*1300
-                    # print objClass, objInst
-                    objClassVector[objClass] = 1
-                    objInstVector[objInst] = 1
-                    objHpr = [float(heading), float(pitch), float(roll)]                    
-                    obj3DShape = np.loadtxt(os.path.join(voxelPath, str(outputImageIdx)+'.txt'), np.float32)
-                    obj3DShape = np.reshape(obj3DShape, self._nolboConfig['decoderStructure']['outputImgDim'])
-                    outputImages.append(obj3DShape)
-                    classList.append(objClassVector)
-                    instList.append(objInstVector)
-                    EulerAngle.append(objHpr)
+                            isObjMarked = True
+                            break
+                    # if too many objects are in one grid cell, only consider #(detector num) objects
+                    if isObjMarked:
+                        objClass, objInst = self._objClassAndInst[objShapePath]
+                        objClassVector = [0]*self._nolboConfig['classDim']
+                        objInstVector = [0]*self._nolboConfig['instDim']
+                        # print objClass, objInst
+                        objClassVector[objClass] = 1
+                        objInstVector[objInst] = 1
+                        objHpr = [float(heading), float(pitch), float(roll)]
+#                         obj3DShape = pandas.read_csv(os.path.join(voxelPath, str(outputImageIdx)+'.txt'), delimiter=' ', dtype=float, header=None)
+                        obj3DShape = pandas.read_hdf(os.path.join(voxelPath, str(outputImageIdx)+'.hdf'), 'voxel3D')
+                        obj3DShape = np.array(obj3DShape)
+                        obj3DShape = np.reshape(obj3DShape, self._nolboConfig['decoderStructure']['outputImgDim'])
+#                         obj3DShape = np.loadtxt(os.path.join(voxelPath, str(outputImageIdx)+'.txt'), np.float32)
+#                         obj3DShape = np.reshape(obj3DShape, self._nolboConfig['decoderStructure']['outputImgDim'])
+                        if outputOrg==True:
+                            obj3DShape = pandas.read_hdf(os.path.join(voxelPath, str(outputImageIdx)+'_org.hdf'), 'voxel3D')
+#                             obj3DShapeOrg = pandas.read_csv(os.path.join(voxelPath, str(outputImageIdx)+'_org.txt'), delimiter=' ', dtype=float, header=None)
+                            obj3DShapeOrg = np.array(obj3DShapeOrg)
+                            obj3DShapeOrg = np.reshape(obj3DShapeOrg, self._nolboConfig['decoderStructure']['outputImgDim'])
+                            outputImagesOrg.append(obj3DShapeOrg)
+                        outputImageIdx += 1
+                        outputImages.append(obj3DShape)
+                        classList.append(objClassVector)
+                        instList.append(objInstVector)
+                        EulerAngle.append(objHpr)
                 inputImages.append(inputImage)
                 bboxHWXY.append(bboxHWXYImage)
                 objectness.append(objectnessImage)                
@@ -155,6 +291,7 @@ class nolboDataset(object):
         bboxHWXY = np.array(bboxHWXY)
         objectness = np.array(objectness)
         outputImages = np.array(outputImages)
+        outputImagesOrg = np.array(outputImagesOrg)
         classList = np.array(classList)
         instList = np.array(instList)
         EulerAngle = np.array(EulerAngle)        
@@ -163,11 +300,14 @@ class nolboDataset(object):
             'bboxHWXY':bboxHWXY,
             'objectness':objectness,
             'outputImages':outputImages,
+            'outputImagesOrg':outputImagesOrg,
             'classList':classList,
             'instList':instList,
             'EulerAngle':EulerAngle
         }
-        print 'done!'
+        # print 'done!'
+        # print 'img num :',len(inputImages)
+        # print 'obj num :',len(outputImages)
         return batchDict
         
     def _imageAugmentation(self, inputImages):

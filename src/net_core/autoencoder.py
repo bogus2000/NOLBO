@@ -49,7 +49,7 @@ class encoder(object):
         print hiddenC.shape
         return hiddenC
     def __call__(self, inputs, bnPhase=True):
-        print 'encoder...'
+        print 'encoder - '+self._scopeName
         print inputs.shape
         self._bnPhase = bnPhase
         with tf.variable_scope(self._scopeName, reuse=self._reuse):            
@@ -103,14 +103,16 @@ class decoder(object):
         print hiddenC.shape
         return hiddenC
     def __call__(self, inputs, bnPhase=True):
-        print 'decoder...'
+        print 'decoder - '+self._scopeName
+        print inputs.shape
         self._bnPhase = bnPhase
         linearOutputDim = 4*np.prod(inputs.get_shape().as_list()[1:])
         convInputImgDimWOChannel = self._outputImgDim[:-1]/np.prod(self._stridesList)
         convInputChannel = int(linearOutputDim/np.prod(convInputImgDimWOChannel))
         linearOutputDim = np.prod(convInputImgDimWOChannel) * convInputChannel
         convInputDim = np.concatenate([[-1],convInputImgDimWOChannel,[convInputChannel]])
-        hidden = self._linearTransform(inputs=inputs, outputDim=linearOutputDim)        
+        hidden = self._linearTransform(inputs=inputs, outputDim=linearOutputDim)
+        print hidden.shape
         hidden = tf.reshape(hidden, shape=convInputDim)
         print hidden.shape
         totalDepth = len(self._filterNumList)

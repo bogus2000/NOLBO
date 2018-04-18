@@ -61,6 +61,7 @@ nolboConfig = {
         'lastLayerActivation':tf.nn.sigmoid
     }
 }
+
 def main():
     nb = nolbo.nolbo(config=nolboConfig)
 if __name__ == "__main__":
