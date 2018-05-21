@@ -2,7 +2,7 @@ import numpy as np
 import tensorflow as tf
 
 class priornet(object):
-    def __init__(self, inputDim, outputDim, hiddenLayerNum, scopeName="priornet",
+    def __init__(self, inputDim, outputDim, hiddenLayerNum, scopeName="priornet", training=False,
                  coreActivation=tf.nn.leaky_relu, lastLayerActivation=None,
                  constLogVar = None,
                  reuse=False):
@@ -10,6 +10,7 @@ class priornet(object):
         self._outputDim = outputDim
         self._hiddenLayerNum = hiddenLayerNum
         self._scopeName = scopeName
+        self._training=training
         self._coreAct = coreActivation
         self._lastAct = lastLayerActivation
         self._constLogVar = constLogVar
@@ -20,12 +21,13 @@ class priornet(object):
             ratio = np.power(float(self._outputDim)/float(self._inputDim), 1.0/float(self._hiddenLayerNum))
             layerDim = self._inputDim
             print inputVector.shape
-            hidden = inputVector
+            hidden = 2.0*inputVector-1.0
             print "mean prior"
             for i in range(self._hiddenLayerNum-1):
                 layerDim = layerDim * ratio
                 hidden = tf.layers.dense(inputs=hidden,units=int(layerDim),activation=None,use_bias=True)
                 hidden = tf.layers.batch_normalization(hidden)
+                hidden = tf.layers.dropout(hidden, rate=0.5, training=self._training)
                 if self._coreAct != None:
                     hidden = self._coreAct(hidden)
                 print hidden.shape
@@ -38,11 +40,12 @@ class priornet(object):
                 print "logVar prior"
                 layerDim = self._inputDim
                 print inputVector.shape
-                hidden = inputVector
+                hidden = 2.0*inputVector - 1.0
                 for i in range(self._hiddenLayerNum - 1):
                     layerDim = layerDim * ratio
                     hidden = tf.layers.dense(inputs=hidden, units=int(layerDim), activation=None, use_bias=True)
                     hidden = tf.layers.batch_normalization(hidden)
+                    hidden = tf.layers.dropout(hidden, rate=0.5, training=self._training)
                     if self._coreAct != None:
                         hidden = self._coreAct(hidden)
                     print hidden.shape
@@ -54,7 +57,7 @@ class priornet(object):
                 print "logVar prior : constant "+str(self._constLogVar)
                 logVarPrior = self._constLogVar * tf.ones_like(meanPrior)
             else:
-                pass
+                logVarPrior = None
         self._reuse = True
         self.variables = tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope=self._scopeName)
         self.update_ops = tf.get_collection(tf.GraphKeys.UPDATE_OPS, scope=self._scopeName)

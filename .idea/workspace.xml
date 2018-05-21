@@ -2,29 +2,63 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c9c7583a-1c39-4f7c-97b9-011b505e7079" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/pretraining_data/pretraining_data_here.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pretraining.ipynb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/weights/NOLBO_weight/NOLBO_weights_here.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/weights/pretraining_weight/checkpoint" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/weights/pretraining_weight/classifierCore.ckpt.data-00000-of-00001" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/weights/pretraining_weight/classifierCore.ckpt.index" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/weights/pretraining_weight/classifierCore.ckpt.meta" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/weights/pretraining_weight/classifierLastLayer.ckpt.data-00000-of-00001" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/weights/pretraining_weight/classifierLastLayer.ckpt.index" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/weights/pretraining_weight/classifierLastLayer.ckpt.meta" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/weights/pretraining_weight/dCore.ckpt.data-00000-of-00001" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/weights/pretraining_weight/dCore.ckpt.index" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/weights/pretraining_weight/dCore.ckpt.meta" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/weights/pretraining_weight/pretrain.ckpt.data-00000-of-00001" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/weights/pretraining_weight/pretrain.ckpt.index" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/weights/pretraining_weight/pretrain.ckpt.meta" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/weights/pretraining_weight/pretraining_weights_here.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/weights/classifier/checkpoint" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/weights/classifier/classifier_weights_here.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/weights/classifier/nolbo_encoderCore.ckpt.data-00000-of-00001" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/weights/classifier/nolbo_encoderCore.ckpt.index" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/weights/classifier/nolbo_encoderCore.ckpt.meta" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/weights/classifier/nolbo_encoderLastLayer.ckpt.data-00000-of-00001" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/weights/classifier/nolbo_encoderLastLayer.ckpt.index" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/weights/classifier/nolbo_encoderLastLayer.ckpt.meta" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/weights/nolbo_multiObject/NOLBO_weights_here.txt" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_classPrior.ckpt.data-00000-of-00001" afterPath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_classPrior.ckpt.data-00000-of-00001" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_classPrior.ckpt.index" afterPath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_classPrior.ckpt.index" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_classPrior.ckpt.meta" afterPath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_classPrior.ckpt.meta" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_decoder.ckpt.data-00000-of-00001" afterPath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_decoder.ckpt.data-00000-of-00001" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_decoder.ckpt.index" afterPath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_decoder.ckpt.index" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_decoder.ckpt.meta" afterPath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_decoder.ckpt.meta" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_encoderCore.ckpt.data-00000-of-00001" afterPath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_encoderCore.ckpt.data-00000-of-00001" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_encoderCore.ckpt.index" afterPath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_encoderCore.ckpt.index" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_encoderCore.ckpt.meta" afterPath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_encoderCore.ckpt.meta" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_encoderLastLayer.ckpt.data-00000-of-00001" afterPath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_encoderLastLayer.ckpt.data-00000-of-00001" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_encoderLastLayer.ckpt.index" afterPath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_encoderLastLayer.ckpt.index" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_encoderLastLayer.ckpt.meta" afterPath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_encoderLastLayer.ckpt.meta" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_instPrior.ckpt.data-00000-of-00001" afterPath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_instPrior.ckpt.data-00000-of-00001" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_instPrior.ckpt.index" afterPath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_instPrior.ckpt.index" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_instPrior.ckpt.meta" afterPath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_instPrior.ckpt.meta" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/NOLBO.iml" afterPath="$PROJECT_DIR$/.idea/NOLBO.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.ipynb_checkpoints/Untitled-checkpoint.ipynb" afterPath="$PROJECT_DIR$/.ipynb_checkpoints/Untitled-checkpoint.ipynb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.ipynb_checkpoints/Untitled1-checkpoint.ipynb" afterPath="$PROJECT_DIR$/.ipynb_checkpoints/Untitled1-checkpoint.ipynb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.ipynb_checkpoints/pretraining-checkpoint.ipynb" afterPath="$PROJECT_DIR$/.ipynb_checkpoints/pretraining-checkpoint.ipynb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.ipynb_checkpoints/test-checkpoint.ipynb" afterPath="$PROJECT_DIR$/.ipynb_checkpoints/test-checkpoint.ipynb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.txt" afterPath="$PROJECT_DIR$/README.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/NOLBO_training_data/NOLBO_training_data_here.txt" afterPath="$PROJECT_DIR$/data/NOLBO_training_data/NOLBO_training_data_here.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/classifier_training_data/pretraining_data_here.txt" afterPath="$PROJECT_DIR$/data/classifier_training_data/pretraining_data_here.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dataset_utils/__init__.py" afterPath="$PROJECT_DIR$/dataset_utils/__init__.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dataset_utils/datasetUtils.py" afterPath="$PROJECT_DIR$/dataset_utils/datasetUtils.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dataset_utils/dataset_builder/.ipynb_checkpoints/Untitled-checkpoint.ipynb" afterPath="$PROJECT_DIR$/dataset_utils/dataset_builder/.ipynb_checkpoints/Untitled-checkpoint.ipynb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dataset_utils/dataset_builder/Untitled.ipynb" afterPath="$PROJECT_DIR$/dataset_utils/dataset_builder/Untitled.ipynb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dataset_utils/dataset_builder/__init__.py" afterPath="$PROJECT_DIR$/dataset_utils/dataset_builder/__init__.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dataset_utils/dataset_builder/class_inst_indexing.ipynb" afterPath="$PROJECT_DIR$/dataset_utils/dataset_builder/class_inst_indexing.ipynb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dataset_utils/dataset_builder/pretraining.py" afterPath="$PROJECT_DIR$/dataset_utils/dataset_builder/pretraining.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dataset_utils/dataset_loader/__init__.py" afterPath="$PROJECT_DIR$/dataset_utils/dataset_loader/__init__.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dataset_utils/dataset_loader/nolbo.py" afterPath="$PROJECT_DIR$/dataset_utils/dataset_loader/nolbo.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/nolboTraining.py" afterPath="$PROJECT_DIR$/nolboTraining.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/.ipynb_checkpoints/class_inst_indexing-checkpoint.ipynb" afterPath="$PROJECT_DIR$/src/.ipynb_checkpoints/class_inst_indexing-checkpoint.ipynb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/__init__.py" afterPath="$PROJECT_DIR$/src/__init__.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/module/__init__.py" afterPath="$PROJECT_DIR$/src/module/__init__.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/module/nolbo.py" afterPath="$PROJECT_DIR$/src/module/nolbo.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net_core/__init__.py" afterPath="$PROJECT_DIR$/src/net_core/__init__.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net_core/autoencoder.py" afterPath="$PROJECT_DIR$/src/net_core/autoencoder.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net_core/darknet.py" afterPath="$PROJECT_DIR$/src/net_core/darknet.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net_core/priornet.py" afterPath="$PROJECT_DIR$/src/net_core/priornet.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test.ipynb" afterPath="$PROJECT_DIR$/test.ipynb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test.py" afterPath="$PROJECT_DIR$/test.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/nolbo_singleObject/checkpoint" afterPath="$PROJECT_DIR$/weights/nolbo_singleObject/checkpoint" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -39,23 +73,11 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="test.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2106">
-              <caret line="87" column="28" lean-forward="false" selection-start-line="87" selection-start-column="28" selection-end-line="87" selection-end-column="28" />
-              <folding>
-                <element signature="e#0#18#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="nolbo.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/module/nolbo.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5590">
-              <caret line="223" column="17" lean-forward="false" selection-start-line="223" selection-start-column="17" selection-end-line="223" selection-end-column="17" />
+            <state relative-caret-position="563">
+              <caret line="280" column="0" lean-forward="false" selection-start-line="280" selection-start-column="0" selection-end-line="280" selection-end-column="0" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -63,32 +85,24 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="nolbo.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/dataset_utils/dataset_loader/nolbo.py">
+      <file leaf-file-name="nolboTraining.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/nolboTraining.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="234">
-              <caret line="49" column="31" lean-forward="false" selection-start-line="49" selection-start-column="31" selection-end-line="49" selection-end-column="31" />
+            <state relative-caret-position="-363">
+              <caret line="23" column="42" lean-forward="false" selection-start-line="23" selection-start-column="42" selection-end-line="23" selection-end-column="42" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="priornet.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/net_core/priornet.py">
+      <file leaf-file-name="RenderforCNN_dataset.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/dataset_utils/dataset_loader/RenderforCNN_dataset.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="910">
-              <caret line="36" column="41" lean-forward="false" selection-start-line="36" selection-start-column="41" selection-end-line="36" selection-end-column="41" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="autoencoder.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/net_core/autoencoder.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1872">
-              <caret line="77" column="19" lean-forward="false" selection-start-line="77" selection-start-column="19" selection-end-line="77" selection-end-column="19" />
-              <folding />
+            <state relative-caret-position="442">
+              <caret line="104" column="27" lean-forward="false" selection-start-line="104" selection-start-column="27" selection-end-line="104" selection-end-column="27" />
+              <folding>
+                <element signature="e#0#14#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -96,9 +110,47 @@
       <file leaf-file-name="darknet.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/net_core/darknet.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2756">
-              <caret line="111" column="33" lean-forward="false" selection-start-line="111" selection-start-column="33" selection-end-line="111" selection-end-column="33" />
-              <folding />
+            <state relative-caret-position="364">
+              <caret line="38" column="49" lean-forward="false" selection-start-line="38" selection-start-column="49" selection-end-line="38" selection-end-column="49" />
+              <folding>
+                <element signature="e#0#18#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="training_classification.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/training_classification.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2210">
+              <caret line="109" column="6" lean-forward="false" selection-start-line="109" selection-start-column="6" selection-end-line="109" selection-end-column="6" />
+              <folding>
+                <element signature="e#0#18#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Imagenet_dataset.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/dataset_utils/dataset_loader/Imagenet_dataset.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="494">
+              <caret line="19" column="54" lean-forward="false" selection-start-line="19" selection-start-column="54" selection-end-line="19" selection-end-column="54" />
+              <folding>
+                <element signature="e#0#14#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="datasetUtils.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/dataset_utils/datasetUtils.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="624">
+              <caret line="63" column="24" lean-forward="false" selection-start-line="63" selection-start-column="24" selection-end-line="63" selection-end-column="24" />
+              <folding>
+                <element signature="e#0#18#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -108,6 +160,9 @@
   <component name="FindInProjectRecents">
     <findStrings>
       <find>variance</find>
+      <find>as_array</find>
+      <find>self._in_plate</find>
+      <find>True</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -117,15 +172,22 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/src/module/classifier.py" />
-        <option value="$PROJECT_DIR$/dataset_utils/datasetUtils.py" />
         <option value="$PROJECT_DIR$/dataset_utils/dataset_builder/pretraining.py" />
         <option value="$PROJECT_DIR$/nolboTraining.py" />
-        <option value="$PROJECT_DIR$/src/net_core/autoencoder.py" />
-        <option value="$PROJECT_DIR$/src/net_core/darknet.py" />
-        <option value="$PROJECT_DIR$/src/net_core/priornet.py" />
         <option value="$PROJECT_DIR$/dataset_utils/dataset_loader/nolbo.py" />
-        <option value="$PROJECT_DIR$/src/module/nolbo.py" />
+        <option value="$PROJECT_DIR$/src/net_core/priornet.py" />
         <option value="$PROJECT_DIR$/test.py" />
+        <option value="$PROJECT_DIR$/src/net_core/autoencoder.py" />
+        <option value="$PROJECT_DIR$/dataset_utils/dataset_loader/nolbo_dataset.py" />
+        <option value="$PROJECT_DIR$/dataset_utils/dataset_loader/vae3D_dataset.py" />
+        <option value="$PROJECT_DIR$/training_VAE.py" />
+        <option value="$PROJECT_DIR$/training_rotClassification.py" />
+        <option value="$PROJECT_DIR$/dataset_utils/dataset_loader/RenderforCNN_dataset.py" />
+        <option value="$PROJECT_DIR$/dataset_utils/dataset_loader/Imagenet_dataset.py" />
+        <option value="$PROJECT_DIR$/dataset_utils/datasetUtils.py" />
+        <option value="$PROJECT_DIR$/src/net_core/darknet.py" />
+        <option value="$PROJECT_DIR$/training_classification.py" />
+        <option value="$PROJECT_DIR$/src/module/nolbo.py" />
       </list>
     </option>
   </component>
@@ -151,7 +213,6 @@
     </navigator>
     <panes>
       <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -248,6 +309,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -468,9 +530,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="1985" y="24" width="1855" height="1056" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1342318" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16765499" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -494,94 +556,11 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="1" />
+      <option name="time" value="2" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/module/nolbo.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="208">
-          <caret line="8" column="40" lean-forward="false" selection-start-line="8" selection-start-column="40" selection-end-line="8" selection-end-column="40" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1248">
-          <caret line="54" column="25" lean-forward="false" selection-start-line="54" selection-start-column="25" selection-end-line="54" selection-end-column="25" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/module/nolbo.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dataset_utils/dataset_loader/nolbo.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/net_core/darknet.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2886">
-          <caret line="111" column="33" lean-forward="false" selection-start-line="111" selection-start-column="33" selection-end-line="111" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/module/nolbo.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3354">
-          <caret line="136" column="94" lean-forward="false" selection-start-line="136" selection-start-column="94" selection-end-line="136" selection-end-column="94" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dataset_utils/dataset_loader/nolbo.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/module/nolbo.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="14196">
-          <caret line="553" column="42" lean-forward="false" selection-start-line="553" selection-start-column="42" selection-end-line="553" selection-end-column="42" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/net_core/darknet.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1976">
@@ -617,7 +596,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2756">
           <caret line="111" column="45" lean-forward="false" selection-start-line="111" selection-start-column="45" selection-end-line="111" selection-end-column="45" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -666,7 +644,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2756">
           <caret line="111" column="45" lean-forward="false" selection-start-line="111" selection-start-column="45" selection-end-line="111" selection-end-column="45" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -716,7 +693,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2756">
           <caret line="111" column="45" lean-forward="false" selection-start-line="111" selection-start-column="45" selection-end-line="111" selection-end-column="45" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -741,44 +717,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/nolboTraining.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="443">
-          <caret line="23" column="42" lean-forward="false" selection-start-line="23" selection-start-column="42" selection-end-line="23" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dataset_utils/datasetUtils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="598">
-          <caret line="27" column="19" lean-forward="false" selection-start-line="27" selection-start-column="19" selection-end-line="27" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/net_core/darknet.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2756">
-          <caret line="111" column="33" lean-forward="false" selection-start-line="111" selection-start-column="33" selection-end-line="111" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/net_core/autoencoder.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1872">
-          <caret line="77" column="19" lean-forward="false" selection-start-line="77" selection-start-column="19" selection-end-line="77" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/net_core/priornet.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="910">
-          <caret line="36" column="41" lean-forward="false" selection-start-line="36" selection-start-column="41" selection-end-line="36" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/test.ipynb">
       <provider selected="true" editor-type-id="ipnb-editor">
         <state>
@@ -786,31 +724,160 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/module/nolbo.py">
+    <entry file="file://$USER_HOME$/.PyCharmCE2016.3/system/python_stubs/-1247972723/cv2/cv2/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5590">
-          <caret line="223" column="17" lean-forward="false" selection-start-line="223" selection-start-column="17" selection-end-line="223" selection-end-column="17" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="317">
+          <caret line="8252" column="4" lean-forward="false" selection-start-line="8252" selection-start-column="4" selection-end-line="8252" selection-end-column="4" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2106">
-          <caret line="87" column="28" lean-forward="false" selection-start-line="87" selection-start-column="28" selection-end-line="87" selection-end-column="28" />
+        <state relative-caret-position="3770">
+          <caret line="151" column="6" lean-forward="false" selection-start-line="151" selection-start-column="6" selection-end-line="151" selection-end-column="6" />
           <folding>
-            <element signature="e#0#18#0" expanded="true" />
+            <element signature="e#0#18#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net_core/autoencoder.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1040">
+          <caret line="45" column="79" lean-forward="false" selection-start-line="45" selection-start-column="79" selection-end-line="45" selection-end-column="79" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net_core/priornet.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="962">
+          <caret line="38" column="41" lean-forward="false" selection-start-line="38" selection-start-column="41" selection-end-line="38" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dataset_utils/dataset_loader/nolbo_dataset.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="7202">
+          <caret line="283" column="47" lean-forward="false" selection-start-line="283" selection-start-column="47" selection-end-line="283" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dataset_utils/dataset_loader/vae3D_dataset.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2938">
+          <caret line="113" column="46" lean-forward="false" selection-start-line="113" selection-start-column="46" selection-end-line="113" selection-end-column="46" />
+          <folding>
+            <element signature="e#0#18#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/training_VAE.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1274">
+          <caret line="49" column="23" lean-forward="false" selection-start-line="49" selection-start-column="23" selection-end-line="49" selection-end-column="23" />
+          <folding>
+            <element signature="e#0#18#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/dataset_utils/dataset_loader/nolbo.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="49" column="31" lean-forward="false" selection-start-line="49" selection-start-column="31" selection-end-line="49" selection-end-column="31" />
+        <state relative-caret-position="-3353">
+          <caret line="90" column="33" lean-forward="true" selection-start-line="90" selection-start-column="33" selection-end-line="90" selection-end-column="33" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/datasetLoader_test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#18#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/training_rotClassification.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="639">
+          <caret line="100" column="21" lean-forward="false" selection-start-line="100" selection-start-column="21" selection-end-line="100" selection-end-column="21" />
+          <folding>
+            <element signature="e#0#18#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net_core/darknet.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="364">
+          <caret line="38" column="49" lean-forward="false" selection-start-line="38" selection-start-column="49" selection-end-line="38" selection-end-column="49" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dataset_utils/dataset_loader/Imagenet_dataset.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="494">
+          <caret line="19" column="54" lean-forward="false" selection-start-line="19" selection-start-column="54" selection-end-line="19" selection-end-column="54" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dataset_utils/dataset_loader/RenderforCNN_dataset.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="104" column="27" lean-forward="false" selection-start-line="104" selection-start-column="27" selection-end-line="104" selection-end-column="27" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nolboTraining.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-363">
+          <caret line="23" column="42" lean-forward="false" selection-start-line="23" selection-start-column="42" selection-end-line="23" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/module/nolbo.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="563">
+          <caret line="280" column="0" lean-forward="false" selection-start-line="280" selection-start-column="0" selection-end-line="280" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dataset_utils/datasetUtils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="624">
+          <caret line="63" column="24" lean-forward="false" selection-start-line="63" selection-start-column="24" selection-end-line="63" selection-end-column="24" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/training_classification.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2210">
+          <caret line="109" column="6" lean-forward="false" selection-start-line="109" selection-start-column="6" selection-end-line="109" selection-end-column="6" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

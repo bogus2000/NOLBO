@@ -1,0 +1,2 @@
+model_checkpoint_path: "nolbo_instPrior.ckpt"
+all_model_checkpoint_paths: "nolbo_instPrior.ckpt"

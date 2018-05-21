@@ -7,6 +7,7 @@ import sys
 import src.net_core.darknet as darknet
 import src.net_core.autoencoder as ae
 import src.net_core.priornet as priornet
+import dataset_utils.datasetUtils as datasetUtils
 
 # nolbo_multiObjectConfig = {
 #     'inputImgDim':[448,448,1],
@@ -27,6 +28,12 @@ import src.net_core.priornet as priornet
 #         'lastLayerActivation':tf.nn.sigmoid
 #     }
 # }
+def categorical_crossentropy(gt, pred):
+    loss = -tf.reduce_mean(tf.reduce_sum(gt*tf.log(pred+1e-8), axis=1))
+    return loss
+
+def leaky_relu(x, alpha=0.2):
+    return tf.maximum(x, alpha * x)
 
 def sampling(mu, logVar):
     epsilon = tf.random_normal(shape=tf.shape(mu), mean=0.0, stddev=1.0, dtype=tf.float32)
@@ -73,13 +80,11 @@ def regulizer_loss(z_mean, z_logVar, dist_in_z_space, class_input = None):
     # loss_reg = tf.reduce_mean(loss_reg)
     return loss_reg
 
-def binary_loss(xPred, xTarget):
-    gamma = 0.95
-    b_range = False
-    b_range = int(b_range)
+def binary_loss(xPred, xTarget, epsilon = 1e-7, gamma=0.5, b_range=False):
+    b_range = float(b_range)
     voxelDimTotal = np.prod(xPred.get_shape().as_list()[1:])
     yTarget = -b_range + (2.0 * b_range + 1.0) * tf.reshape(xTarget, (-1, voxelDimTotal))
-    yPred = tf.clip_by_value(tf.reshape(xPred, (-1, voxelDimTotal)), clip_value_min=1e-7, clip_value_max=1.0 - 1e-7)
+    yPred = tf.clip_by_value(tf.reshape(xPred, (-1, voxelDimTotal)), clip_value_min=epsilon, clip_value_max=1.0 - epsilon)
     bce_loss = - tf.reduce_sum(gamma * yTarget * tf.log(yPred) + (1.0 - gamma) * (1.0 - yTarget) * tf.log(1.0 - yPred),
                                axis=-1)
     return bce_loss
@@ -94,6 +99,16 @@ def nlb_loss(mean, logVar, mean_target, logVar_target):
     loss = tf.reduce_sum(0.5 * (lV_t - lV) + tf.div((tf.exp(lV) + tf.square(m - m_t)), (2.0 * tf.exp(lV_t))) - 0.5,
                          axis=-1)
     return loss
+
+def create_evaluation(xTarget, xPred, prob=0.5):
+    yTarget = tf.cast(tf.reshape(xTarget, (-1, np.prod(xTarget.get_shape().as_list()[1:]))), tf.float32)
+    yPred = tf.cast(tf.greater_equal(tf.reshape(xPred, (-1, np.prod(xPred.get_shape().as_list()[1:]))), prob), tf.float32)
+    TP = tf.reduce_mean(tf.reduce_sum(yTarget * yPred, axis=-1))
+    FP = tf.reduce_mean(tf.reduce_sum((1.0 - yTarget) * yPred, axis=-1))
+    FN = tf.reduce_mean(tf.reduce_sum(yTarget * (1.0 - yPred), axis=-1))
+    p = TP / (TP + FP + 1e-10)
+    r = TP / (TP + FN + 1e-10)
+    return p,r
 
 class nolbo_singleObject(object):
     def __init__(self, config=None, nameScope='nolbo', isTraining=True):
@@ -160,6 +175,8 @@ class nolbo_singleObject(object):
             tf.float32, shape=([None, self._config['instDim']]))
         self._EulerAngleGT = tf.placeholder(
             tf.float32, shape=([None, self._config['rotDim']]))
+        # self._lr = tf.Variable(self._config['learningRate'])
+        self._lr = tf.placeholder(tf.float32, shape=[])
         print 'done!'
 
     def _getEncOutChannelDimAndLatentDim(self):
@@ -176,72 +193,97 @@ class nolbo_singleObject(object):
         self._getEncOutChannelDimAndLatentDim()
         self._inputImages = tf.placeholder(tf.float32, shape=(np.concatenate([[None], self._config['inputImgDim']])))
         self._encoder = darknet.encoder_singleVectorOutput(
-            outputVectorDim= 2 * self._latentDim, nameScope=self._nameScope+'-enc') #multiply 2 as we want both mean and variance
-        self._decoder = ae.decoder(architecture=self._config['decoderStructure'], decoderName=self._nameScope+'-dec')
+            outputVectorDim= 2 * self._latentDim,
+            coreActivation=tf.nn.elu,
+            trainable=self._config['trainable'],
+            nameScope=self._nameScope+'-enc') #multiply 2 as we want both mean and variance
+        self._decoder = ae.decoder(
+            architecture=self._config['decoderStructure'],
+            decoderName=self._nameScope+'-dec')
         encOutput = self._encoder(self._inputImages)
         self._meanPred, self._logVarPred = tf.split(encOutput, num_or_size_splits=2, axis=-1)
-        self._classMeanPred = self._meanPred[...,0:self._config['zClassDim']]
-        self._instMeanPred = self._meanPred[...,self._config['zClassDim']:self._config['zClassDim']+self._config['zInstDim']]
-        self._rotMeanPred = self._meanPred[...,self._config['zClassDim']+self._config['zInstDim']:]
-        self._classLogVarPred = self._logVarPred[..., 0:self._config['zClassDim']]
-        self._instLogVarPred = self._logVarPred[...,self._config['zClassDim']:self._config['zClassDim'] + self._config['zInstDim']]
-        self._rotLogVarPred = self._logVarPred[..., self._config['zClassDim'] + self._config['zInstDim']:]
+        # self._classMeanPred = self._meanPred[...,0:self._config['zClassDim']]
+        # self._instMeanPred = self._meanPred[...,self._config['zClassDim']:self._config['zClassDim']+self._config['zInstDim']]
+        # self._rotMeanPred = self._meanPred[...,self._config['zClassDim']+self._config['zInstDim']:]
+        # self._classLogVarPred = self._logVarPred[..., 0:self._config['zClassDim']]
+        # self._instLogVarPred = self._logVarPred[...,self._config['zClassDim']:self._config['zClassDim'] + self._config['zInstDim']]
+        # self._rotLogVarPred = self._logVarPred[..., self._config['zClassDim'] + self._config['zInstDim']:]
         self._zs = sampling(mu=self._meanPred, logVar=self._logVarPred)
         self._outputImagesPred = self._decoder(self._zs)
 
         if self._isTraining:
             self._classPriornet = priornet.priornet(
                 inputDim=self._config['classDim'], outputDim=self._config['zClassDim'],
-                hiddenLayerNum=2, scopeName=self._nameScope+'-classPrior',
+                hiddenLayerNum=2, scopeName=self._nameScope+'-classPrior', training=self._isTraining,
+                coreActivation=tf.nn.elu,
                 constLogVar= 0.0)
             self._instPriornet = priornet.priornet(
                 inputDim=self._config['classDim'] + self._config['instDim'], outputDim=self._config['zInstDim'],
-                hiddenLayerNum=2, scopeName=self._nameScope+'-instPrior',
+                hiddenLayerNum=2, scopeName=self._nameScope+'-instPrior', training=self._isTraining,
+                coreActivation=tf.nn.elu,
                 constLogVar= 0.0)
             self._classMeanPrior, self._classLogVarPrior = \
                 self._classPriornet(self._classListGT)
             self._instMeanPrior, self._instLogVarPrior = \
                 self._instPriornet(tf.concat([self._classListGT, self._instListGT], axis=-1))
+            self._p, self._r = create_evaluation(xTarget=self._outputImagesGT, xPred=self._outputImagesPred)
         print "done!"
 
     def _createLoss(self):
         print "create loss..."
-        self._binaryLoss = tf.reduce_mean(binary_loss(self._outputImagesPred, self._outputImagesGT))
+        self._binaryLoss = tf.reduce_mean(
+            binary_loss(xPred=self._outputImagesPred, xTarget=self._outputImagesGT, gamma=0.97, b_range=False))
         self._regulizerLoss\
             = tf.reduce_mean(
-                regulizer_loss(z_mean=self._classMeanPrior, z_logVar=self._classLogVarPrior, dist_in_z_space=20.0)
+                regulizer_loss(z_mean=self._classMeanPrior, z_logVar=self._classLogVarPrior, dist_in_z_space=10.0)
                 +
                 regulizer_loss(
                     z_mean=self._instMeanPrior, z_logVar=self._instLogVarPrior,
-                    dist_in_z_space=5.0, class_input=self._classListGT))
+                    dist_in_z_space=3.0, class_input=self._classListGT))
         self._meanPrior = tf.concat([self._classMeanPrior, self._instMeanPrior, self._EulerAngleGT], axis=-1)
+        self._meanPrior_p360 = tf.concat([self._classMeanPrior, self._instMeanPrior, self._EulerAngleGT+360.0], axis=-1)
+        self._meanPrior_n360 = tf.concat([self._classMeanPrior, self._instMeanPrior, self._EulerAngleGT-360.0], axis=-1)
         self._logVarPrior = tf.concat(
             [self._classLogVarPrior, self._instLogVarPrior, 2.0*tf.log(0.1)*tf.ones_like(self._EulerAngleGT)], axis=-1)
-        self._nlbLoss = tf.reduce_mean(
-            nlb_loss(mean=self._meanPred, logVar=self._logVarPred,
-                     mean_target=self._meanPrior, logVar_target=self._logVarPrior))
-        self._totalLoss = self._binaryLoss + self._regulizerLoss + self._nlbLoss
-    def _setOptimizer(self, learningRate=0.0001):
+
+        nlb0 = nlb_loss(mean=self._meanPred, logVar=self._logVarPred,
+                     mean_target=self._meanPrior, logVar_target=self._logVarPrior)
+        nlbp360 = nlb_loss(mean=self._meanPred, logVar=self._logVarPred,
+                        mean_target=self._meanPrior_p360, logVar_target=self._logVarPrior)
+        nlbn360 = nlb_loss(mean=self._meanPred, logVar=self._logVarPred,
+                        mean_target=self._meanPrior_n360, logVar_target=self._logVarPrior)
+        self._nlbLoss = tf.reduce_mean(tf.minimum(tf.minimum(nlb0, nlbp360), nlbn360))
+        self._totalLoss = 10.0*self._binaryLoss + 0.1*self._nlbLoss + 0.01*self._regulizerLoss
+
+    def _setOptimizer(self):
         print "set optimizer..."
-        self._lr = learningRate
-        optimizer = tf.train.AdamOptimizer(learning_rate=self._lr)
-        with tf.control_dependencies(self._encoder.allUpdate_ops + self._decoder.update_ops):
-            self._optimizer = optimizer.minimize(
+        with tf.control_dependencies(
+            self._encoder.allUpdate_ops + self._decoder.update_ops
+            + self._classPriornet.update_ops + self._instPriornet.update_ops
+        ):
+            self._optimizer = tf.train.AdamOptimizer(learning_rate=self._lr).minimize(
                 self._totalLoss,
-                var_list= self._encoder.allVariables + self._decoder.variables
+                var_list
+                =
+                self._encoder.allVariables + self._decoder.variables
+                +
+                self._classPriornet.variables + self._instPriornet.variables
             )
     def fit(self, batchDict):
         feed_dict = {
+            self._lr: batchDict['learningRate'],
             self._inputImages : batchDict['inputImages'],
             self._outputImagesGT : batchDict['outputImages'],
             self._classListGT : batchDict['classList'],
             self._instListGT : batchDict['instList'],
             self._EulerAngleGT : batchDict['EulerAngle']
         }
-        optimizer = self._optimizer
-        lossList = self._totalLoss, self._binaryLoss, self._regulizerLoss, self._nlbLoss
-        opt, loss = self._sess.run([optimizer, lossList], feed_dict=feed_dict)
-        return loss
+
+        opt, loss, pr = self._sess.run(
+            [self._optimizer,
+             self._totalLoss, self._binaryLoss, self._regulizerLoss, self._nlbLoss,
+             self._p, self._r], feed_dict=feed_dict)
+        return loss, pr
 
     def saveEncoderCore(self, savePath='./'):
         eCorePath = os.path.join(savePath, self._nameScope + '_encoderCore.ckpt')
@@ -276,7 +318,7 @@ class nolbo_singleObject(object):
         pIPath = os.path.join(restorePath, self._nameScope + '_instPrior.ckpt')
         self._classPriornet.saver.restore(self._sess, pCPath)
         self._instPriornet.saver.restore(self._sess, pIPath)
-    def restoreNetwork(self, restorePath='./'):
+    def restoreNetworks(self, restorePath='./'):
         self.restoreEncoderCore(restorePath)
         self.restoreEncoderLastLayer(restorePath)
         self.restoreDecoder(restorePath)
@@ -414,21 +456,21 @@ class nolbo_multiObject(object):
             = tf.reduce_mean(
             regulizer_loss(z_mean=self._classMeanPrior, z_logVar=self._classLogVarPrior, dist_in_z_space=20.0)
             + regulizer_loss(
-                z_mean=self._instMeanPrior, z_logVar=self._instLogVarPrior,
-                dist_in_z_space=5.0, class_input=self._classListGT))
+                z_mean=self._instMeanPrior, z_logVar=self._instLogVarPrior, dist_in_z_space=5.0, 
+                class_input=self._classListGT))
         self._meanPrior = tf.concat([self._classMeanPrior, self._instMeanPrior, self._EulerAngleGT], axis=-1)
         self._logVarPrior = tf.concat(
             [self._classLogVarPrior, self._instLogVarPrior, 2.0 * tf.log(0.1) * tf.ones_like(self._EulerAngleGT)])
-        self._nlbLoss = nlb_loss(mean=self._meanPred, logVar=self._logVarPred,
-                                 mean_target=self._meanPrior, logVar_target=self._logVarPrior)
+        self._nlbLoss = tf.reduce_mean(
+            nlb_loss(mean=self._meanPred, logVar=self._logVarPred,
+                     mean_target=self._meanPrior, logVar_target=self._logVarPrior))
         self._totalLoss = \
             self._bboxLoss + 5.0*self._objLoss + 0.5*self._noObjLoss + \
             self._binaryLoss + self._regulizerLoss + self._nlbLoss
         print 'done!'
         
-    def _setOptimizer(self, learningRate=0.0001):
+    def _setOptimizer(self):
         print "set optimizer..."
-        self._lr = learningRate        
         optimizer = tf.train.AdamOptimizer(learning_rate=self._lr)
         with tf.control_dependencies(self._update_ops):
             self._optimizer = optimizer.minimize(self._totalLoss, var_list=self._variables)
@@ -436,6 +478,7 @@ class nolbo_multiObject(object):
         
     def fit(self, batchDict):
         feed_dict = {
+            self._lr : batchDict['learningRate'],
             self._inputImages : batchDict['inputImages'],
             self._bboxHWXYGT : batchDict['bboxHWXY'],
             self._objectnessGT : batchDict['objectness'],
@@ -520,6 +563,8 @@ class nolbo_multiObject(object):
         self._classListGT = tf.placeholder(tf.float32, shape=([None,self._config['classDim']]))
         self._instListGT = tf.placeholder(tf.float32, shape=([None, self._config['instDim']]))
         self._EulerAngleGT = tf.placeholder(tf.float32, shape=([None, self._config['rotDim']]))
+        # self._lr = tf.Variable(self._config['learningRate'])
+        self._lr = tf.placeholder(tf.float32, shape=[])
         offset = np.transpose(
             np.reshape(
                 np.array(
@@ -624,8 +669,10 @@ class darknet_classifier(object):
             self,
             dataPath='./',
             nameScope='nolbo',
-            imgSize = (416,416), batchSize = 64, learningRate = 0.0001,
-            lastLayerActivation = tf.nn.sigmoid):
+            imgSize = (None,None), batchSize = 64, learningRate = 0.0001,
+            classNum = 40,
+            coreLayerActivation = tf.nn.elu,
+            lastLayerActivation = tf.nn.softmax):
         self._imgList = None
         self._imgClassList = None
         self._dataPath = dataPath
@@ -633,8 +680,9 @@ class darknet_classifier(object):
         self._imgSize = imgSize
         self._batchSize = batchSize
         self._lr = learningRate
+        self._coreAct = coreLayerActivation
         self._lastAct = lastLayerActivation
-        self._classNum = None
+        self._classNum = classNum
         self.variables = None
         self.update_ops = None
         self._inputImg = None
@@ -642,66 +690,81 @@ class darknet_classifier(object):
         self._outputClassGT = None
         self._optimizer = None
         self._loss = None
-        self._loadDataset()
         self._buildNetwork()
         self._createLossAndOptimizer()
+        self._createEvaluation()
         #init the session
-        gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.90)
+        gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.93)
         self._sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options))
         #initialize variables
         init = tf.group(
             tf.global_variables_initializer(),
             tf.local_variables_initializer()
         )
+        # init = tf.initialize_all_variables()
         #launch the session
         self._sess.run(init)
-    def _loadDataset(self):
-        print "load Dataset..."
-        self._imgList = []
-        imgListTemp = np.load(os.path.join(self._dataPath,'imgList.npy'))
-        self._imgClassList = np.load(os.path.join(self._dataPath+'imgClassList.npy'))
-        self._classNum = self._imgClassList.shape[1]
-        for i in range(len(imgListTemp)):
-            img = cv2.resize(imgListTemp[i], self._imgSize)
-            img = img.reshape((self._imgSize[0], self._imgSize[1],1))
-            self._imgList.append(img)
-        self._imgList = np.array(self._imgList)
-        print "done!"
+
     def _buildNetwork(self):
         print "build network..."
-        self._inputImg = tf.placeholder(tf.float32, shape=(None, self._imgSize[0], self._imgSize[1], 1))
+        self._inputImg = tf.placeholder(tf.float32, shape=(None, self._imgSize[0], self._imgSize[1], 3))
         self._outputClassGT = tf.placeholder(tf.float32, shape=(None, self._classNum))
         self._classifier = darknet.encoder_singleVectorOutput(
-            outputVectorDim=self._classNum, nameScope=self._nameScope+'-enc')
+            outputVectorDim=self._classNum,
+            coreActivation=self._coreAct,
+            lastLayerActivation=self._lastAct,
+            lastLayerPooling='average',
+            nameScope=self._nameScope+'-enc')
         self._outputClass = self._classifier(self._inputImg)
-        if self._lastAct != None:
-            self._outputClass = self._lastAct(self._outputClass)
         print "done!"
     def _createLossAndOptimizer(self):
         print "create loss and optimizer..."
-        self._optimizer = tf.train.AdamOptimizer(learning_rate=self._lr)
-        def binaryLoss(xPred, xTarget, epsilon=1e-7):
-            yTarget = xTarget
-            yPred = tf.clip_by_value(xPred, clip_value_min=epsilon, clip_value_max=1.0-epsilon)
-            bce_loss = - tf.reduce_sum(5.0*yTarget*tf.log(yPred) + 0.5*(1.0-yTarget)*tf.log(1.0-yPred), axis=-1)
-            return bce_loss
-        self._loss = tf.reduce_mean(binaryLoss(xPred=self._outputClass, xTarget=self._outputClassGT))
+        self._lr = tf.placeholder(tf.float32, shape=[])
+        # self._optimizer = tf.train.AdamOptimizer(learning_rate=self._lr)
+        self._optimizer = tf.train.GradientDescentOptimizer(learning_rate=self._lr)
+        # self._optimizer = tf.train.MomentumOptimizer(learning_rate=self._lr, momentum=0.9, use_nesterov=True)
+        # self._optimizer = tf.contrib.opt.NadamOptimizer(learning_rate=self._lr)
+        # self._optimizer = tf.train.AdadeltaOptimizer(learning_rate=self._lr)
+        # self._optimizer = tf.train.AdagradOptimizer(learning_rate=self._lr)
+        # self._loss = tf.reduce_mean(
+        #     tf.losses.softmax_cross_entropy(logits=self._outputClass, onehot_labels=self._outputClassGT))
+
+        # self._loss = tf.reduce_sum(
+        #     tf.losses.softmax_cross_entropy(onehot_labels=self._outputClassGT, logits=self._outputClass))
+
+        self._loss = tf.reduce_mean(-tf.reduce_sum(self._outputClassGT * tf.log(self._outputClass+1e-8), reduction_indices=1))
+        # self._loss = tf.reduce_mean(
+        #     tf.nn.softmax_cross_entropy_with_logits_v2(labels=self._outputClassGT, logits=self._outputClass))
         with tf.control_dependencies(self._classifier.allUpdate_ops):
             self._optimizer = self._optimizer.minimize(
                 self._loss, var_list = self._classifier.allVariables
             )
+        # with tf.control_dependencies(tf.get_collection(tf.GraphKeys.UPDATE_OPS)):
+        #     self._optimizer = self._optimizer.minimize(
+        #         self._loss
+        #     )
         print "done!"
-    def _fit(self, batchImg, batchClassIndex):
+    def _createEvaluation(self):
+        prediction = tf.argmax(self._outputClass, -1)
+        gt = tf.argmax(self._outputClassGT, -1)
+        equality = tf.equal(prediction, gt)
+        self._acc = tf.reduce_mean(tf.cast(equality, tf.float32))
+        self._top5Acc = tf.reduce_mean(
+            tf.cast(
+                tf.nn.in_top_k(
+                    predictions=self._outputClass,
+                    targets=gt,
+                    k=5),
+                tf.float32))
+
+    def fit(self, batchDict):
         feed_dict = {
-            self._inputImg : batchImg,
-            self._outputClassGT : batchClassIndex
+            self._inputImg : batchDict['inputImages'],
+            self._outputClassGT : batchDict['classIndexList'],
+            self._lr : batchDict['learningRate']
         }
-        accAll = (tf.reduce_sum((1-self._outputClass)*(1-self._outputClassGT))+tf.reduce_sum(self._outputClass*self._outputClassGT))\
-        /(tf.reduce_sum(self._outputClassGT)+tf.reduce_sum(1-self._outputClassGT))
-        accPositive = tf.reduce_sum(self._outputClass*self._outputClassGT)/tf.reduce_sum(self._outputClassGT)
-        _, lossResult = self._sess.run([self._optimizer, self._loss], feed_dict=feed_dict)
-        accAllResult, accPositiveResult = self._sess.run([accAll, accPositive], feed_dict=feed_dict)
-        return lossResult, accAllResult, accPositiveResult
+        opt, lossResult, accResult, top5AccResult = self._sess.run([self._optimizer, self._loss, self._acc, self._top5Acc], feed_dict=feed_dict)
+        return lossResult, accResult, top5AccResult
 
     def saveEncoderCore(self, savePath='./'):
         eCorePath = os.path.join(savePath, self._nameScope + '_encoderCore.ckpt')
@@ -718,37 +781,376 @@ class darknet_classifier(object):
     def restoreEncoderLastLayer(self, restorePath='./'):
         eLastPath = os.path.join(restorePath, self._nameScope + '_encoderLastLayer.ckpt')
         self._classifier.lastLayerSaver.restore(self._sess, eLastPath)
-    def restoreNetwork(self, restorePath='./'):
+    def restoreNetworks(self, restorePath='./'):
         self.restoreEncoderCore(restorePath)
         self.restoreEncoderLastLayer(restorePath)
 
-    def train(self, epoch = 1000, weightSavePath='./'):
-        currEpoch = 0
-        iteration = 0.0
-        loss = 0
-        accAll, accPositive = 0, 0
-        runTime = 0
-        for i in range(int(epoch)):
-            for j in range(int(len(self._imgList)/self._batchSize)):
-                startTime = time.time()
-                start = j * self._batchSize
-                end = np.min((start+self._batchSize, len(self._imgList)))
-                lossTemp, accAllTemp, accPositiveTemp = self._fit(self._imgList[start:end], self._imgClassList[start:end])
-                endTime = time.time()
-                runTimeTemp = endTime - startTime
-                currIter = iteration%1000
-                if iteration!=0 and currIter == 0:
-                    sys.stdout.write('\nsaveWeights...\n')
-                    self.saveNetworks(weightSavePath)
-                    loss = 0
-                    accAll, accPositive = 0, 0
-                    runTime = 0
-                accAll = float(accAll*currIter + accAllTemp)/float(currIter+1.0)
-                accPositive = float(accPositive*currIter + accPositiveTemp)/float(currIter+1.0)
-                loss = float(loss*currIter + lossTemp)/float(currIter+1.0)
-                runTime = float(runTime*currIter + runTimeTemp)/(currIter+1.0)
-                sys.stdout.write('Epoch:{:04d} iter:{:06d} runtime:{:.3f} '.format(int(currEpoch+1), int(iteration+1), runTime))
-                sys.stdout.write('curr/total:{:05d}/{:05d} '.format(start, len(self._imgList)))
-                sys.stdout.write('loss:{:.3f} accAll:{:.3f} accPos:{:.3f}\r'.format(loss, accAll, accPositive))
-                iteration += 1.0
-            currEpoch +=1
+class VAE3D(object):
+    def __init__(self, network_architecture):
+        self._net_arc = network_architecture
+        self._enc_arc = network_architecture['encoder']
+        self._dec_arc = network_architecture['decoder']
+
+        #encoder input
+        self._inputImages = tf.placeholder(tf.float32, shape=np.concatenate([[None], self._enc_arc['inputImgDim']]))
+
+        #priornet input
+        self._latentDim = 0
+        if self._net_arc['class']:
+            self._latentDim += self._net_arc['zClassDim']
+            self._classListGT = tf.placeholder(tf.float32, shape=([None, self._net_arc['classDim']]))
+        if self._net_arc['inst']:
+            self._latentDim += self._net_arc['zInstDim']
+            self._instListGT = tf.placeholder(tf.float32, shape=([None, self._net_arc['instDim']]))
+        if self._net_arc['rot']:
+            self._latentDim += self._net_arc['zRotDim']
+            self._EulerAngleGT = tf.placeholder(tf.float32, shape=([None, self._net_arc['rotDim']]))
+
+        #decoder input
+        self._z = None
+        #decoder output
+        self._outputImages = None
+        #decoder output GT
+        self._outputImagesGT = tf.placeholder(tf.float32, shape=np.concatenate([[None], self._enc_arc['inputImgDim']]))
+
+        #for training
+        self._lr = None
+
+        self._buildNetwork()
+        self._createLoss()
+        self._setOptimizer()
+        # init the session
+
+        gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.93)
+        config = tf.ConfigProto(gpu_options=gpu_options)
+        config.gpu_options.allow_growth = True
+        self._sess = tf.Session(config=config)
+        # initialize variables
+        init = tf.group(
+            tf.global_variables_initializer(),
+            tf.local_variables_initializer()
+        )
+        # launch the session
+        self._sess.run(init)
+
+    def _buildNetwork(self):
+        print 'build network...'
+        if self._net_arc['isTraining']:
+            self._classPriornet = priornet.priornet(
+                inputDim=self._net_arc['classDim'], outputDim=self._net_arc['zClassDim'],
+                hiddenLayerNum=2, scopeName=self._net_arc['nameScope'] + '-classPrior', training=self._net_arc['isTraining'],
+                coreActivation=tf.nn.elu,
+                constLogVar=0.0)
+            self._instPriornet = priornet.priornet(
+                inputDim=self._net_arc['classDim'] + self._net_arc['instDim'], outputDim=self._net_arc['zInstDim'],
+                hiddenLayerNum=2, scopeName=self._net_arc['nameScope'] + '-instPrior', training=self._net_arc['isTraining'],
+                coreActivation=tf.nn.elu,
+                constLogVar=0.0)
+            self._classMeanPrior, self._classLogVarPrior = \
+                self._classPriornet(self._classListGT)
+            self._instMeanPrior, self._instLogVarPrior = \
+                self._instPriornet(tf.concat([self._classListGT, self._instListGT], axis=-1))
+
+
+        self._encoder = ae.encoder(self._enc_arc, encoderName='encoder3D')
+        self._decoder = ae.decoder(self._dec_arc, decoderName='nolbo-dec')
+        encOutput = self._encoder(self._inputImages)
+        self._meanPredWOTanh, self._logVarPred = tf.split(encOutput, num_or_size_splits=2, axis=-1)
+        self._classMeanPred = self._meanPredWOTanh[...,0:self._net_arc['zClassDim']]
+        self._instMeanPred = self._meanPredWOTanh[...,self._net_arc['zClassDim']:self._net_arc['zClassDim']+self._net_arc['zInstDim']]
+        self._rotMeanPred = self._meanPredWOTanh[..., self._net_arc['zClassDim'] + self._net_arc['zInstDim']:]
+        self._rotMeanSinPred = self._meanPredWOTanh[...,self._net_arc['zClassDim']+self._net_arc['zInstDim']:self._net_arc['zClassDim']+self._net_arc['zInstDim']+self._net_arc['zRotDim']/2]
+        self._rotMeanSinPred = tf.nn.tanh(self._rotMeanSinPred)
+        self._rotMeanCosPred = self._meanPredWOTanh[...,self._net_arc['zClassDim']+self._net_arc['zInstDim']+self._net_arc['zRotDim'] / 2 :]
+        self._rotMeanCosPred = tf.nn.tanh(self._rotMeanCosPred)
+        self._meanPred = tf.concat([self._classMeanPred, self._instMeanPred, self._rotMeanSinPred, self._rotMeanCosPred], axis=-1)
+
+        self._classLogVarPred = self._logVarPred[..., 0:self._net_arc['zClassDim']]
+        self._instLogVarPred = self._logVarPred[...,self._net_arc['zClassDim']:self._net_arc['zClassDim'] + self._net_arc['zInstDim']]
+        self._rotLogVarPred = self._logVarPred[..., self._net_arc['zClassDim'] + self._net_arc['zInstDim']:]
+
+        self._zsAll = []
+        self._zs = sampling(mu=self._meanPred, logVar=self._logVarPred)
+        self._zsAll += [self._zs]
+
+        self._meanPredwithPriorClass = tf.concat(
+            [self._classMeanPrior, self._instMeanPred, self._rotMeanSinPred, self._rotMeanCosPred], axis=-1)
+        self._logVarPredwithPriorClass = tf.concat(
+            [self._classLogVarPrior, self._instLogVarPred, self._rotLogVarPred], axis=-1)
+        self._zsPriorClass = sampling(mu=self._meanPredwithPriorClass, logVar=self._logVarPredwithPriorClass)
+        self._zsAll += [self._zsPriorClass]
+
+        self._meanPredwithPriorInst = tf.concat(
+            [self._classMeanPred, self._instMeanPrior, self._rotMeanSinPred, self._rotMeanCosPred], axis=-1)
+        self._logVarPredwithPriorInst = tf.concat(
+            [self._classLogVarPred, self._instLogVarPrior, self._rotLogVarPred], axis=-1)
+        self._zsPriorInst = sampling(mu=self._meanPredwithPriorInst, logVar=self._logVarPredwithPriorInst)
+        self._zsAll += [self._zsPriorInst]
+
+        self._meanPredOrg = tf.concat(
+            [self._classMeanPred, self._instMeanPred, tf.zeros_like(self._rotMeanSinPred), tf.ones_like(self._rotMeanCosPred)], axis=-1)
+        self._zsOrg = sampling(mu=self._meanPredOrg, logVar=self._logVarPred)
+        self._zsAll += [self._zsOrg]
+
+        self._zsAll = tf.concat(self._zsAll, axis=0)
+        print self._zsAll.shape
+        self._outputImages = self._decoder(self._zsAll)
+
+        if self._net_arc['isTraining']:
+            self._p, self._r = create_evaluation(xTarget=self._outputImagesGT, xPred=self._outputImages)
+
+        print "done!"
+
+    def _createLoss(self):
+        print "create loss..."
+        self._binaryLoss = tf.reduce_mean(
+            binary_loss(xPred=self._outputImages, xTarget=self._outputImagesGT, gamma=0.60, b_range=False))
+        self._regulizerLoss \
+            = tf.reduce_mean(
+            regulizer_loss(z_mean=self._classMeanPrior, z_logVar=self._classLogVarPrior, dist_in_z_space=5.0)
+            +
+            regulizer_loss(
+                z_mean=self._instMeanPrior, z_logVar=self._instLogVarPrior,
+                dist_in_z_space=2.0, class_input=self._classListGT)
+        )
+        self._meanPrior = tf.concat([self._classMeanPrior, self._instMeanPrior, self._EulerAngleGT], axis=-1)
+        # self._meanPrior_p360 = tf.concat([self._classMeanPrior, self._instMeanPrior, self._EulerAngleGT + 360.0],
+        #                                  axis=-1)
+        # self._meanPrior_n360 = tf.concat([self._classMeanPrior, self._instMeanPrior, self._EulerAngleGT - 360.0],
+        #                                  axis=-1)
+        self._logVarPrior = tf.concat(
+            [self._classLogVarPrior, self._instLogVarPrior, 2.0 * tf.log(0.1) * tf.ones_like(self._EulerAngleGT)],
+            axis=-1)
+        #
+        # nlb0 = nlb_loss(mean=self._meanPred, logVar=self._logVarPred,
+        #                 mean_target=self._meanPrior, logVar_target=self._logVarPrior)
+        # nlbp360 = nlb_loss(mean=self._meanPred, logVar=self._logVarPred,
+        #                    mean_target=self._meanPrior_p360, logVar_target=self._logVarPrior)
+        # nlbn360 = nlb_loss(mean=self._meanPred, logVar=self._logVarPred,
+        #                    mean_target=self._meanPrior_n360, logVar_target=self._logVarPrior)
+        # self._nlbLoss = tf.reduce_mean(tf.minimum(tf.minimum(nlb0, nlbp360), nlbn360))
+
+        self._nlbLoss = tf.reduce_mean(
+            nlb_loss(mean=self._meanPred,
+                     logVar=self._logVarPred,mean_target=self._meanPrior, logVar_target=self._logVarPrior))
+
+        self._totalLoss = self._binaryLoss + self._nlbLoss + 0.01 * self._regulizerLoss
+
+    def _setOptimizer(self):
+        print "set optimizer..."
+        self._lr = tf.placeholder(tf.float32, shape=[])
+        # self._optimizer = tf.train.AdamOptimizer(learning_rate=self._lr)
+        self._optimizer = tf.train.MomentumOptimizer(learning_rate=self._lr, momentum=0.9, use_nesterov=True)
+        with tf.control_dependencies(
+                                        self._encoder.update_ops + self._decoder.update_ops
+                                + self._classPriornet.update_ops + self._instPriornet.update_ops
+        ):
+            self._optimizer = self._optimizer.minimize(
+                self._totalLoss,
+                var_list
+                =
+                self._encoder.variables + self._decoder.variables
+                +
+                self._classPriornet.variables + self._instPriornet.variables
+            )
+
+    def fit(self, batchDict):
+        feed_dict = {
+            self._lr: batchDict['learningRate'],
+            self._inputImages: batchDict['inputImages'],
+            self._outputImagesGT : batchDict['outputImages'],
+            self._classListGT: batchDict['classList'],
+            self._instListGT: batchDict['instList'],
+            self._EulerAngleGT: batchDict['EulerAngleSinCos']
+        }
+        optimizer = self._optimizer
+        lossList = self._totalLoss, self._binaryLoss, self._regulizerLoss, self._nlbLoss
+        precisionRecall = self._p, self._r
+        opt, loss, pr = self._sess.run([optimizer, lossList, precisionRecall], feed_dict=feed_dict)
+        return loss, pr
+
+    def saveEncoder(self, savePath='./'):
+        ePath = os.path.join(savePath, self._net_arc['nameScope'] + '_encoderCore.ckpt')
+        self._encoder.saver.save(self._sess, ePath)
+    def saveDecoder(self, savePath='./'):
+        dPath = os.path.join(savePath, self._net_arc['nameScope'] + '_decoder.ckpt')
+        self._decoder.saver.save(self._sess, dPath)
+    def savePriornet(self, savePath='./'):
+        pCPath = os.path.join(savePath, self._net_arc['nameScope'] + '_classPrior.ckpt')
+        pIPath = os.path.join(savePath, self._net_arc['nameScope'] + '_instPrior.ckpt')
+        self._classPriornet.saver.save(self._sess, pCPath)
+        self._instPriornet.saver.save(self._sess, pIPath)
+    def saveNetworks(self, savePath='./'):
+        self.saveEncoder(savePath)
+        self.saveDecoder(savePath)
+        self.savePriornet(savePath)
+    def restoreEncoder(self, restorePath='./'):
+        eCorePath = os.path.join(restorePath, self._net_arc['nameScope'] + '_encoderCore.ckpt')
+        self._encoder.saver.restore(self._sess, eCorePath)
+    def restoreDecoder(self, restorePath='./'):
+        dPath = os.path.join(restorePath, self._net_arc['nameScope'] + '_decoder.ckpt')
+        self._decoder.saver.restore(self._sess, dPath)
+    def restorePriornet(self, restorePath='./'):
+        pCPath = os.path.join(restorePath, self._net_arc['nameScope'] + '_classPrior.ckpt')
+        pIPath = os.path.join(restorePath, self._net_arc['nameScope'] + '_instPrior.ckpt')
+        self._classPriornet.saver.restore(self._sess, pCPath)
+        self._instPriornet.saver.restore(self._sess, pIPath)
+    def restoreNetworks(self, restorePath='./'):
+        self.restoreEncoder(restorePath)
+        self.restoreDecoder(restorePath)
+        self.restorePriornet(restorePath)
+
+class RenderforCNN_classifier(object):
+    def __init__(self, classNum, instNum, rotDim, coreActivation=tf.nn.elu, nameScope='nolbo'):
+        self._classNum = classNum
+        self._instNum = instNum
+        self._rotDim = rotDim
+        self._coreAct = coreActivation
+        self._nameScope = nameScope
+        #inputs
+        self._inputImages = None
+        #outputs
+        self._classPred = None
+        self._instPred = None
+        self._azimuthPred = None
+        self._elevationPred = None
+        self._in_plane_rotPred = None
+        #output ground truth
+        self._classGT = None
+        self._instGT = None
+        self._azimuthGT = None
+        self._elevationGT = None
+        self._in_plane_rotGT = None
+        #parameters for training
+        self._learningRate = None
+
+        self._initVariables()
+        self._buildNetwork()
+        self._createEvaluation()
+        self._createLoss()
+        self._setOptimizer()
+
+        gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.93)
+        config = tf.ConfigProto(gpu_options=gpu_options)
+        config.gpu_options.allow_growth = True
+        self._sess = tf.Session(config=config)
+        # initialize variables
+        init = tf.group(
+            tf.global_variables_initializer(),
+            tf.local_variables_initializer()
+        )
+        # launch the session
+        self._sess.run(init)
+
+    def _initVariables(self):
+        # self._inputImages = tf.placeholder(tf.float32, shape=(None, None, None, 3))
+        self._learningRate = tf.placeholder(tf.float32, shape=[])
+        self._classGT = tf.placeholder(tf.float32, shape=(None, self._classNum))
+        self._instGT = tf.placeholder(tf.float32, shape=(None, self._instNum))
+        self._azimuthGT = tf.placeholder(tf.float32, shape=(None, self._rotDim))
+        self._elevationGT = tf.placeholder(tf.float32, shape=(None, self._rotDim))
+        self._in_plane_rotGT = tf.placeholder(tf.float32, shape=(None, self._rotDim))
+    def _buildNetwork(self):
+        print "build network..."
+        self._inputImages = tf.placeholder(tf.float32, shape=(None, None, None, 3))
+        self._classifier = darknet.encoder_singleVectorOutput(
+            outputVectorDim = self._classNum + self._instNum + 3*self._rotDim,
+            coreActivation=self._coreAct,
+            lastLayerActivation=None,
+            nameScope=self._nameScope + '-enc')
+        self._encoderOutput = self._classifier(self._inputImages)
+        self._classPred = tf.nn.softmax(self._encoderOutput[...,:self._classNum])
+        self._instPred = tf.nn.softmax(
+            self._encoderOutput[...,self._classNum:self._classNum+self._instNum])
+        self._azimuthPred = tf.nn.softmax(
+            self._encoderOutput[...,self._classNum+self._instNum:self._classNum+self._instNum+self._rotDim])
+        self._elevationPred = tf.nn.softmax(
+            self._encoderOutput[...,self._classNum+self._instNum+self._rotDim:self._classNum+self._instNum+2*self._rotDim])
+        self._in_plane_rotPred = tf.nn.softmax(
+            self._encoderOutput[...,self._classNum+self._instNum+2*self._rotDim:])
+        print "done!"
+
+    def _createLoss(self):
+        print "create loss..."
+        # self._classLoss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits_v2(labels=self._classGT, logits=self._classPred))
+        # self._instLoss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits_v2(labels=self._instGT, logits=self._instPred))
+        # self._azimuthLoss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits_v2(labels=self._azimuthGT, logits=self._azimuthPred))
+        # self._elevationLoss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits_v2(labels=self._elevationGT, logits=self._elevationPred))
+        # self._in_plane_rotLoss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits_v2(labels=self._in_plane_rotGT, logits=self._in_plane_rotPred))
+        self._classLoss = categorical_crossentropy(gt=self._classGT, pred=self._classPred)
+        self._instLoss = categorical_crossentropy(gt=self._instGT, pred=self._instPred)
+        self._azimuthLoss = categorical_crossentropy(gt=self._azimuthGT, pred=self._azimuthPred)
+        self._elevationLoss = categorical_crossentropy(gt=self._elevationGT, pred=self._elevationPred)
+        self._in_plane_rotLoss = categorical_crossentropy(gt=self._in_plane_rotGT, pred=self._in_plane_rotPred)
+        self._loss = self._classLoss + self._instLoss + \
+                     (self._azimuthLoss + self._elevationLoss + self._in_plane_rotLoss)
+        print "done!"
+
+    def _setOptimizer(self):
+        print "set optimizer..."
+        # self._optimizer = tf.train.AdamOptimizer(learning_rate=self._learningRate)
+        self._optimizer = tf.train.MomentumOptimizer(learning_rate=self._learningRate, momentum=0.9, use_nesterov=True)
+        with tf.control_dependencies(self._classifier.allUpdate_ops):
+            self._optimizer = self._optimizer.minimize(
+                self._loss, var_list = self._classifier.allVariables
+            )
+        print "done!"
+
+    def _createEvaluation(self):
+        classPrediction = tf.argmax(self._classPred, -1)
+        classGT = tf.argmax(self._classGT, -1)
+        classEquality = tf.equal(classPrediction, classGT)
+        self._classAcc = tf.reduce_mean(tf.cast(classEquality, tf.float32))
+        instPrediction = tf.argmax(self._instPred, -1)
+        instGT = tf.argmax(self._instGT, -1)
+        instEquality = tf.equal(instPrediction, instGT)
+        self._instAcc = tf.reduce_mean(tf.cast(instEquality, tf.float32))
+        azimuthPrediction = tf.argmax(self._azimuthPred, -1)
+        azimuthGT = tf.argmax(self._azimuthGT, -1)
+        azimuthEquality = tf.equal(azimuthPrediction, azimuthGT)
+        self._azimuthAcc = tf.reduce_mean(tf.cast(azimuthEquality, tf.float32))
+        elevationPrediction = tf.argmax(self._elevationPred, -1)
+        elevationGT = tf.argmax(self._elevationGT, -1)
+        elevationEquality = tf.equal(elevationPrediction, elevationGT)
+        self._elevationAcc = tf.reduce_mean(tf.cast(elevationEquality, tf.float32))
+        in_plane_rotPrediction = tf.argmax(self._in_plane_rotPred, -1)
+        in_plane_rotGT = tf.argmax(self._in_plane_rotGT, -1)
+        in_plane_rotEquality = tf.equal(in_plane_rotPrediction, in_plane_rotGT)
+        self._in_plane_rotAcc = tf.reduce_mean(tf.cast(in_plane_rotEquality, tf.float32))
+
+    def fit(self, batchDict):
+        feed_dict = {
+            self._inputImages : batchDict['inputImages'],
+            self._classGT : batchDict['classList'],
+            self._instGT : batchDict['instList'],
+            self._azimuthGT : batchDict['azimuth'],
+            self._elevationGT : batchDict['elevation'],
+            self._in_plane_rotGT : batchDict['in_plane_rot'],
+            self._learningRate : batchDict['learningRate']
+        }
+        opt, totalLoss, classAcc, instAcc, azAcc, elAcc, ipAcc = self._sess.run(
+            [self._optimizer, self._loss,
+             self._classAcc, self._instAcc,
+             self._azimuthAcc, self._elevationAcc, self._in_plane_rotAcc], feed_dict=feed_dict)
+        return totalLoss, classAcc, instAcc, azAcc, elAcc, ipAcc
+
+    def saveEncoderCore(self, savePath='./'):
+        eCorePath = os.path.join(savePath, self._nameScope + '_encoderCore.ckpt')
+        self._classifier.coreSaver.save(self._sess, eCorePath)
+    def saveEncoderLastLayer(self, savePath='./'):
+        eLastPath = os.path.join(savePath, self._nameScope + '_encoderLastLayer.ckpt')
+        self._classifier.lastLayerSaver.save(self._sess, eLastPath)
+    def saveNetworks(self, savePath='./'):
+        self.saveEncoderCore(savePath)
+        self.saveEncoderLastLayer(savePath)
+    def restoreEncoderCore(self, restorePath='./'):
+        eCorePath = os.path.join(restorePath, self._nameScope + '_encoderCore.ckpt')
+        self._classifier.coreSaver.restore(self._sess, eCorePath)
+    def restoreEncoderLastLayer(self, restorePath='./'):
+        eLastPath = os.path.join(restorePath, self._nameScope + '_encoderLastLayer.ckpt')
+        self._classifier.lastLayerSaver.restore(self._sess, eLastPath)
+    def restoreNetworks(self, restorePath='./'):
+        self.restoreEncoderCore(restorePath)
+        self.restoreEncoderLastLayer(restorePath)
+
+

@@ -42,6 +42,7 @@ class encoder(object):
         self._filterNumList = self._arc['filterNumList']
         self._kernelSizeList = self._arc['kernelSizeList']
         self._stridesList = self._arc['stridesList']
+        self._lastPool = self._arc['lastPool']
     def _convEnc(self, inputs, filters, kernelSize, strides=2, padding='same'):
         hiddenC = self._conv(inputs=inputs, filters=filters, kernel_size=kernelSize, strides=strides, padding=padding, activation=None, trainable=self._trainable, use_bias=False)
         hiddenC = tf.layers.batch_normalization(inputs=hiddenC, training=self._bnPhase, trainable=self._trainable)
@@ -54,17 +55,21 @@ class encoder(object):
         self._bnPhase = bnPhase
         with tf.variable_scope(self._scopeName, reuse=self._reuse):            
             totalDepth = len(self._filterNumList)
+            hidden = inputs
             for depth in range(totalDepth-1):
                 filterNum = self._filterNumList[depth]
                 kernelSize = self._kernelSizeList[depth]
                 strides = self._stridesList[depth]
-                if depth==0:
-                    hidden = inputs
                 hidden = self._convEnc(hidden, filters=filterNum, kernelSize=kernelSize, strides=strides)
-            hidden = self._conv(hidden, self._filterNumList[totalDepth-1], self._kernelSizeList[totalDepth-1], self._stridesList[totalDepth-1], padding='valid', activation=None, trainable=self._trainable, use_bias=True)
+                # hidden = self._convEnc(hidden, filters=filterNum, kernelSize=kernelSize, strides=1)
+            hidden = self._conv(hidden, self._filterNumList[totalDepth-1], self._kernelSizeList[totalDepth-1], self._stridesList[totalDepth-1], padding='same', activation=None, trainable=self._trainable, use_bias=True)
+            if self._lastPool == 'max':
+                hidden = tf.reduce_max(hidden, axis=[1,2,3])
+            elif self._lastPool == 'average':
+                hidden = tf.reduce_mean(hidden, axis=[1,2,3])
             print hidden.shape
-            hidden = tf.layers.flatten(hidden)
-            print hidden.shape
+            # hidden = tf.layers.flatten(hidden)
+            # print hidden.shape
         self._reuse = True
         self.variables = tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope=self._scopeName)
         self.update_ops = tf.get_collection(tf.GraphKeys.UPDATE_OPS, scope=self._scopeName)
@@ -94,6 +99,8 @@ class decoder(object):
     def _linearTransform(self, inputs, outputDim):
         inputs = tf.reshape(inputs, (-1, np.prod(inputs.get_shape().as_list()[1:])))
         hiddenL = tf.layers.dense(inputs=inputs, units=outputDim, trainable=self._trainable, use_bias=True)
+        hiddenL = tf.layers.batch_normalization(inputs=hiddenL, training=self._bnPhase, trainable=self._trainable)
+        hiddenL = self._activation(hiddenL)
         print hiddenL.shape
         return hiddenL
     def _convDec(self, inputs, filters, kernelSize, strides, padding='same'):
@@ -111,17 +118,18 @@ class decoder(object):
         convInputChannel = int(linearOutputDim/np.prod(convInputImgDimWOChannel))
         linearOutputDim = np.prod(convInputImgDimWOChannel) * convInputChannel
         convInputDim = np.concatenate([[-1],convInputImgDimWOChannel,[convInputChannel]])
-        hidden = self._linearTransform(inputs=inputs, outputDim=linearOutputDim)
-        print hidden.shape
-        hidden = tf.reshape(hidden, shape=convInputDim)
-        print hidden.shape
-        totalDepth = len(self._filterNumList)
         with tf.variable_scope(self._scopeName, reuse=self._reuse):
+            hidden = self._linearTransform(inputs=inputs, outputDim=linearOutputDim)
+            print hidden.shape
+            hidden = tf.reshape(hidden, shape=convInputDim)
+            print hidden.shape
+            totalDepth = len(self._filterNumList)
             for depth in range(totalDepth-1):
                 filterNum = self._filterNumList[depth]
                 kernelSize = self._kernelSizeList[depth]
                 strides = self._stridesList[depth]
                 hidden = self._convDec(hidden, filters=filterNum, kernelSize=kernelSize, strides=strides)
+                # hidden = self._convDec(hidden, filters=filterNum, kernelSize=kernelSize, strides=1)
             hidden = self._convTrans(hidden, self._filterNumList[totalDepth-1], self._kernelSizeList[totalDepth-1], self._stridesList[totalDepth-1], padding='same', activation=None, trainable=self._trainable, use_bias=False)
             print hidden.shape
             if self._lastLayerAct != None:
