@@ -2,63 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c9c7583a-1c39-4f7c-97b9-011b505e7079" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/weights/classifier/checkpoint" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/weights/classifier/classifier_weights_here.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/weights/classifier/nolbo_encoderCore.ckpt.data-00000-of-00001" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/weights/classifier/nolbo_encoderCore.ckpt.index" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/weights/classifier/nolbo_encoderCore.ckpt.meta" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/weights/classifier/nolbo_encoderLastLayer.ckpt.data-00000-of-00001" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/weights/classifier/nolbo_encoderLastLayer.ckpt.index" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/weights/classifier/nolbo_encoderLastLayer.ckpt.meta" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/weights/nolbo_multiObject/NOLBO_weights_here.txt" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_classPrior.ckpt.data-00000-of-00001" afterPath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_classPrior.ckpt.data-00000-of-00001" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_classPrior.ckpt.index" afterPath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_classPrior.ckpt.index" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_classPrior.ckpt.meta" afterPath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_classPrior.ckpt.meta" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_decoder.ckpt.data-00000-of-00001" afterPath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_decoder.ckpt.data-00000-of-00001" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_decoder.ckpt.index" afterPath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_decoder.ckpt.index" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_decoder.ckpt.meta" afterPath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_decoder.ckpt.meta" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_encoderCore.ckpt.data-00000-of-00001" afterPath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_encoderCore.ckpt.data-00000-of-00001" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_encoderCore.ckpt.index" afterPath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_encoderCore.ckpt.index" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_encoderCore.ckpt.meta" afterPath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_encoderCore.ckpt.meta" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_encoderLastLayer.ckpt.data-00000-of-00001" afterPath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_encoderLastLayer.ckpt.data-00000-of-00001" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_encoderLastLayer.ckpt.index" afterPath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_encoderLastLayer.ckpt.index" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_encoderLastLayer.ckpt.meta" afterPath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_encoderLastLayer.ckpt.meta" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_instPrior.ckpt.data-00000-of-00001" afterPath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_instPrior.ckpt.data-00000-of-00001" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_instPrior.ckpt.index" afterPath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_instPrior.ckpt.index" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_instPrior.ckpt.meta" afterPath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_instPrior.ckpt.meta" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/NOLBO.iml" afterPath="$PROJECT_DIR$/.idea/NOLBO.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.ipynb_checkpoints/Untitled-checkpoint.ipynb" afterPath="$PROJECT_DIR$/.ipynb_checkpoints/Untitled-checkpoint.ipynb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.ipynb_checkpoints/Untitled1-checkpoint.ipynb" afterPath="$PROJECT_DIR$/.ipynb_checkpoints/Untitled1-checkpoint.ipynb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.ipynb_checkpoints/pretraining-checkpoint.ipynb" afterPath="$PROJECT_DIR$/.ipynb_checkpoints/pretraining-checkpoint.ipynb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.ipynb_checkpoints/test-checkpoint.ipynb" afterPath="$PROJECT_DIR$/.ipynb_checkpoints/test-checkpoint.ipynb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.txt" afterPath="$PROJECT_DIR$/README.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/NOLBO_training_data/NOLBO_training_data_here.txt" afterPath="$PROJECT_DIR$/data/NOLBO_training_data/NOLBO_training_data_here.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/classifier_training_data/pretraining_data_here.txt" afterPath="$PROJECT_DIR$/data/classifier_training_data/pretraining_data_here.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dataset_utils/__init__.py" afterPath="$PROJECT_DIR$/dataset_utils/__init__.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dataset_utils/datasetUtils.py" afterPath="$PROJECT_DIR$/dataset_utils/datasetUtils.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dataset_utils/dataset_builder/.ipynb_checkpoints/Untitled-checkpoint.ipynb" afterPath="$PROJECT_DIR$/dataset_utils/dataset_builder/.ipynb_checkpoints/Untitled-checkpoint.ipynb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dataset_utils/dataset_builder/Untitled.ipynb" afterPath="$PROJECT_DIR$/dataset_utils/dataset_builder/Untitled.ipynb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dataset_utils/dataset_builder/__init__.py" afterPath="$PROJECT_DIR$/dataset_utils/dataset_builder/__init__.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dataset_utils/dataset_builder/class_inst_indexing.ipynb" afterPath="$PROJECT_DIR$/dataset_utils/dataset_builder/class_inst_indexing.ipynb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dataset_utils/dataset_builder/pretraining.py" afterPath="$PROJECT_DIR$/dataset_utils/dataset_builder/pretraining.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dataset_utils/dataset_loader/__init__.py" afterPath="$PROJECT_DIR$/dataset_utils/dataset_loader/__init__.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dataset_utils/dataset_loader/nolbo.py" afterPath="$PROJECT_DIR$/dataset_utils/dataset_loader/nolbo.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/nolboTraining.py" afterPath="$PROJECT_DIR$/nolboTraining.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/.ipynb_checkpoints/class_inst_indexing-checkpoint.ipynb" afterPath="$PROJECT_DIR$/src/.ipynb_checkpoints/class_inst_indexing-checkpoint.ipynb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/__init__.py" afterPath="$PROJECT_DIR$/src/__init__.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/module/__init__.py" afterPath="$PROJECT_DIR$/src/module/__init__.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/module/nolbo.py" afterPath="$PROJECT_DIR$/src/module/nolbo.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net_core/__init__.py" afterPath="$PROJECT_DIR$/src/net_core/__init__.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net_core/autoencoder.py" afterPath="$PROJECT_DIR$/src/net_core/autoencoder.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net_core/darknet.py" afterPath="$PROJECT_DIR$/src/net_core/darknet.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net_core/priornet.py" afterPath="$PROJECT_DIR$/src/net_core/priornet.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test.ipynb" afterPath="$PROJECT_DIR$/test.ipynb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test.py" afterPath="$PROJECT_DIR$/test.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/nolbo_singleObject/checkpoint" afterPath="$PROJECT_DIR$/weights/nolbo_singleObject/checkpoint" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -73,10 +17,10 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="nolbo.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="nolbo.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/module/nolbo.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="563">
+            <state relative-caret-position="-11285">
               <caret line="280" column="0" lean-forward="false" selection-start-line="280" selection-start-column="0" selection-end-line="280" selection-end-column="0" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
@@ -119,14 +63,24 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="training_classification.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="training_classification.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/training_classification.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2210">
-              <caret line="109" column="6" lean-forward="false" selection-start-line="109" selection-start-column="6" selection-end-line="109" selection-end-column="6" />
+            <state relative-caret-position="0">
+              <caret line="27" column="5" lean-forward="false" selection-start-line="27" selection-start-column="5" selection-end-line="27" selection-end-column="5" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="README.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/dataset_utils/dataset_loader/README.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -561,13 +515,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/net_core/darknet.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1976">
-          <caret line="81" column="82" lean-forward="false" selection-start-line="81" selection-start-column="82" selection-end-line="81" selection-end-column="82" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/net_core/autoencoder.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -851,16 +798,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/module/nolbo.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="563">
-          <caret line="280" column="0" lean-forward="false" selection-start-line="280" selection-start-column="0" selection-end-line="280" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/dataset_utils/datasetUtils.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="624">
@@ -873,8 +810,26 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/training_classification.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2210">
-          <caret line="109" column="6" lean-forward="false" selection-start-line="109" selection-start-column="6" selection-end-line="109" selection-end-column="6" />
+        <state relative-caret-position="0">
+          <caret line="27" column="5" lean-forward="false" selection-start-line="27" selection-start-column="5" selection-end-line="27" selection-end-column="5" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dataset_utils/dataset_loader/README.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/module/nolbo.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-11285">
+          <caret line="280" column="0" lean-forward="false" selection-start-line="280" selection-start-column="0" selection-end-line="280" selection-end-column="0" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
