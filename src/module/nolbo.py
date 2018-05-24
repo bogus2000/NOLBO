@@ -29,7 +29,7 @@ import dataset_utils.datasetUtils as datasetUtils
 #     }
 # }
 def categorical_crossentropy(gt, pred):
-    loss = -tf.reduce_mean(tf.reduce_sum(gt*tf.log(pred+1e-8), axis=1))
+    loss = -tf.reduce_mean(tf.reduce_sum(gt*tf.log(pred+1e-8), reduction_indices=1))
     return loss
 
 def leaky_relu(x, alpha=0.2):
@@ -721,8 +721,8 @@ class darknet_classifier(object):
         print "create loss and optimizer..."
         self._lr = tf.placeholder(tf.float32, shape=[])
         # self._optimizer = tf.train.AdamOptimizer(learning_rate=self._lr)
-        self._optimizer = tf.train.GradientDescentOptimizer(learning_rate=self._lr)
-        # self._optimizer = tf.train.MomentumOptimizer(learning_rate=self._lr, momentum=0.9, use_nesterov=True)
+        # self._optimizer = tf.train.GradientDescentOptimizer(learning_rate=self._lr)
+        self._optimizer = tf.train.MomentumOptimizer(learning_rate=self._lr, momentum=0.9, use_nesterov=True)
         # self._optimizer = tf.contrib.opt.NadamOptimizer(learning_rate=self._lr)
         # self._optimizer = tf.train.AdadeltaOptimizer(learning_rate=self._lr)
         # self._optimizer = tf.train.AdagradOptimizer(learning_rate=self._lr)
@@ -1089,6 +1089,7 @@ class RenderforCNN_classifier(object):
     def _setOptimizer(self):
         print "set optimizer..."
         # self._optimizer = tf.train.AdamOptimizer(learning_rate=self._learningRate)
+        # self._optimizer = tf.train.GradientDescentOptimizer(learning_rate=self._learningRate)
         self._optimizer = tf.train.MomentumOptimizer(learning_rate=self._learningRate, momentum=0.9, use_nesterov=True)
         with tf.control_dependencies(self._classifier.allUpdate_ops):
             self._optimizer = self._optimizer.minimize(
@@ -1105,18 +1106,27 @@ class RenderforCNN_classifier(object):
         instGT = tf.argmax(self._instGT, -1)
         instEquality = tf.equal(instPrediction, instGT)
         self._instAcc = tf.reduce_mean(tf.cast(instEquality, tf.float32))
+
         azimuthPrediction = tf.argmax(self._azimuthPred, -1)
         azimuthGT = tf.argmax(self._azimuthGT, -1)
         azimuthEquality = tf.equal(azimuthPrediction, azimuthGT)
         self._azimuthAcc = tf.reduce_mean(tf.cast(azimuthEquality, tf.float32))
+        self._azimuthTop5Acc = tf.reduce_mean(tf.cast(
+            tf.nn.in_top_k(predictions=self._azimuthPred, targets=azimuthGT, k=5),tf.float32))
+
         elevationPrediction = tf.argmax(self._elevationPred, -1)
         elevationGT = tf.argmax(self._elevationGT, -1)
         elevationEquality = tf.equal(elevationPrediction, elevationGT)
         self._elevationAcc = tf.reduce_mean(tf.cast(elevationEquality, tf.float32))
+        self._elevationTop5Acc = tf.reduce_mean(tf.cast(
+            tf.nn.in_top_k(predictions=self._elevationPred, targets=elevationGT, k=5), tf.float32))
+
         in_plane_rotPrediction = tf.argmax(self._in_plane_rotPred, -1)
         in_plane_rotGT = tf.argmax(self._in_plane_rotGT, -1)
         in_plane_rotEquality = tf.equal(in_plane_rotPrediction, in_plane_rotGT)
         self._in_plane_rotAcc = tf.reduce_mean(tf.cast(in_plane_rotEquality, tf.float32))
+        self._in_plane_rotTop5Acc = tf.reduce_mean(tf.cast(
+            tf.nn.in_top_k(predictions=self._in_plane_rotPred, targets=in_plane_rotGT, k=5), tf.float32))
 
     def fit(self, batchDict):
         feed_dict = {
@@ -1128,11 +1138,14 @@ class RenderforCNN_classifier(object):
             self._in_plane_rotGT : batchDict['in_plane_rot'],
             self._learningRate : batchDict['learningRate']
         }
-        opt, totalLoss, classAcc, instAcc, azAcc, elAcc, ipAcc = self._sess.run(
+        opt, totalLoss, classAcc, instAcc, azAcc, azTop5Acc, elAcc, elTop5Acc, ipAcc, ipTop5Acc = self._sess.run(
             [self._optimizer, self._loss,
              self._classAcc, self._instAcc,
-             self._azimuthAcc, self._elevationAcc, self._in_plane_rotAcc], feed_dict=feed_dict)
-        return totalLoss, classAcc, instAcc, azAcc, elAcc, ipAcc
+             self._azimuthAcc, self._azimuthTop5Acc,
+             self._elevationAcc, self._elevationTop5Acc,
+             self._in_plane_rotAcc, self._in_plane_rotTop5Acc
+             ], feed_dict=feed_dict)
+        return totalLoss, classAcc, instAcc, azAcc, azTop5Acc, elAcc, elTop5Acc, ipAcc, ipTop5Acc
 
     def saveEncoderCore(self, savePath='./'):
         eCorePath = os.path.join(savePath, self._nameScope + '_encoderCore.ckpt')

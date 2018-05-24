@@ -12,16 +12,16 @@ nolboConfig = {
 
 imgSizeList = [
         # [480, 640, 3],
-        # [360, 480, 3],
-        # [300, 400, 3],
+        [360, 480, 3],
+        [300, 400, 3],
         [240, 320, 3],
         [180, 240, 3],
         [150, 200, 3],
         [120, 160, 3],
-        # [448, 448, 3],
-        # [416, 416, 3],
-        # [352, 352, 3],
-        # [320, 320, 3],
+        [448, 448, 3],
+        [416, 416, 3],
+        [352, 352, 3],
+        [320, 320, 3],
         [288, 288, 3],
         [224, 224, 3],
         [112, 112, 3]
@@ -58,10 +58,15 @@ def trainNolboClassifier(
     while epoch < training_epoch:
 
         start = time.time()
-        # np.random.shuffle(imgSizeList)
-        # dataset.setImageSize(imgSizeList[0])
+        np.random.shuffle(imgSizeList)
+        dataset.setImageSize(imgSizeList[0])
         # dataset.setImageSize([112,112])
-        batchData = dataset.getNextBatchPar(batchSize=batchSize)
+        if imgSizeList[0][0]>300 or imgSizeList[0][1]>300:
+            batchData = dataset.getNextBatchPar(batchSize=64)
+        elif imgSizeList[0][0]<224 and imgSizeList[0][1]<224:
+            batchData = dataset.getNextBatchPar(batchSize=256)
+        else:
+            batchData = dataset.getNextBatchPar(batchSize=128)
         batchData['learningRate'] = learningRate
         # learningRate = learningRate*0.99995
         # lr = lr*0.9990
@@ -69,7 +74,7 @@ def trainNolboClassifier(
         dataStart = dataset._dataStart
         dataLength = dataset._dataLength
 
-        if ((iteration+1) % 2000 == 0 and (iteration+1) != 1) or epochCurr != epoch:
+        if epochCurr != epoch : # or ((iteration+1) % 2000 == 0 and (iteration+1) != 1):
             print ''
             gc.collect()
             iteration = 0
@@ -101,10 +106,10 @@ def trainNolboClassifier(
 if __name__=="__main__":
     sys.exit(trainNolboClassifier(
         nolboConfig=nolboConfig,
-        batchSize=256,
-        training_epoch = 1000,
-        learningRate = 0.1,
-        savePath='weights/nolbo_classifier/',
+        batchSize=128,
+        training_epoch = 10,
+        learningRate = 0.0001,
+        savePath='weights/imagenet_classifier/',
         # restorePath=None
-        restorePath = 'weights/nolbo_classifier/'
+        restorePath = 'weights/imagenet_classifier/'
     ))

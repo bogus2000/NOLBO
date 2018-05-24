@@ -61,15 +61,29 @@ def imageAugmentation(inputImages):
     return inputImages
 
 '''https://github.com/aleju/imgaug'''
-def imgAug(inputImages):
-    seq = iaa.Sequential([
-        iaa.Crop(px=(0, 16)),  # crop images from each side by 0 to 16px (randomly chosen)
-        iaa.Fliplr(0.5),  # horizontally flip 50% of the images
-        iaa.GaussianBlur(sigma=(0, 3.0)),  # blur images with a sigma of 0 to 3.0
-        iaa.Invert(0.05, per_channel=True),  # invert color channels
-        iaa.Add((-10, 10), per_channel=0.5),  # change brightness of images (by -10 to 10 of original value)
-        iaa.AddToHueAndSaturation((-20, 20)),  # change hue and saturation
-    ])
+def imgAug(inputImage, crop=True, flip=True, gaussianBlur=True, channelInvert=True, brightness=True, hueSat=True):
+    augList = []
+    if crop:
+        augList += [iaa.Crop(px=(0, 16))] # crop images from each side by 0 to 16px (randomly chosen)
+    if flip:
+        augList += [iaa.Fliplr(0.5)] # horizontally flip 50% of the images
+    if gaussianBlur:
+        augList += [iaa.GaussianBlur(sigma=(0, 3.0))] # blur images with a sigma of 0 to 3.0
+    if channelInvert:
+        augList += [iaa.Invert(0.05, per_channel=True)] # invert color channels
+    if brightness:
+        augList += [iaa.Add((-10, 10), per_channel=0.5)] # change brightness of images (by -10 to 10 of original value)
+    if hueSat:
+        augList += [iaa.AddToHueAndSaturation((-20, 20))] # change hue and saturation
+    seq = iaa.Sequential(augList)
+    # seq = iaa.Sequential([
+    #     iaa.Crop(px=(0, 16)),  # crop images from each side by 0 to 16px (randomly chosen)
+    #     # iaa.Fliplr(0.5),  # horizontally flip 50% of the images
+    #     iaa.GaussianBlur(sigma=(0, 3.0)),  # blur images with a sigma of 0 to 3.0
+    #     iaa.Invert(0.05, per_channel=True),  # invert color channels
+    #     iaa.Add((-10, 10), per_channel=0.5),  # change brightness of images (by -10 to 10 of original value)
+    #     iaa.AddToHueAndSaturation((-20, 20)),  # change hue and saturation
+    # ])
 
-    images_aug = seq.augment_image(inputImages)
-    return images_aug
+    image_aug = seq.augment_image(inputImage)
+    return image_aug
