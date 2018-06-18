@@ -6,8 +6,8 @@ from pathos.multiprocessing import ProcessingPool as Pool
 
 def imageResize(imagePath, imageSize):
     image = cv2.imread(imagePath, cv2.IMREAD_COLOR)
+    image = datasetUtils.imgAug(image, crop=False, flip=False, gaussianBlur=False)
     image = cv2.resize(image, imageSize)
-    image = datasetUtils.imgAug(image, flip=False)
     return image
 class RenderforCNNDataset(object):
     def __init__(self, dataPath, classNum=12, instNum=7500, rotDim=360):

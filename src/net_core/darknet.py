@@ -78,13 +78,13 @@ class darknet19_core(object):
         outputs = hiddenC65
         return outputs
 
-class encoder_singleVectorOutput(object):
+class encoder(object):
     def __init__(self, outputVectorDim,
                  nameScope='encoder_singleVectorOutput',
                  trainable=True, bnPhase=True, reuse=False,
                  coreActivation=tf.nn.leaky_relu,
                  lastLayerActivation=None,
-                 lastLayerPooling='average'
+                 lastLayerPooling='None',
                  ):
         self._outputVectorDim = outputVectorDim
         self._nameScope = nameScope
@@ -114,9 +114,9 @@ class encoder_singleVectorOutput(object):
                 hidden = tf.reduce_max(hidden, axis=[1,2])
             elif self._lastPool == 'average':
                 hidden = tf.reduce_mean(hidden, axis=[1,2])
-            else:
-                print "error : pooling must be 'max' or 'average';"
-                return
+            elif self._lastPool == 'None':
+                print 'last layer pooling : None'
+                pass
             print hidden.shape
             if self._lastAct!=None:
                 print "last layer activation is", self._lastAct
@@ -125,10 +125,6 @@ class encoder_singleVectorOutput(object):
         self._reuse=True
         self.variables = [self._darknetCore.variables, tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope=self._nameScope+'_LastConv')]
         self.update_ops = [self._darknetCore.update_ops, tf.get_collection(tf.GraphKeys.UPDATE_OPS, scope=self._nameScope+'_LastConv')]
-        # print self.variables[0]
-        # print self.variables[1]
-        # print self.update_ops[0]
-        # print self.update_ops[1]
         self.allVariables = self._darknetCore.variables + tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope=self._nameScope+'_LastConv')
         self.allUpdate_ops = self._darknetCore.update_ops + tf.get_collection(tf.GraphKeys.UPDATE_OPS, scope=self._nameScope+'_LastConv')
         self.coreVariables = self._darknetCore.variables

@@ -2,9 +2,7 @@ import numpy as np
 import copy
 import time, sys
 import dataset_utils.dataset_loader.RenderforCNN_dataset as renderDataset
-import src.module.nolbo as nolboModule
-import gc
-
+import src.module.classifier as classifier
 nolboConfig = {
     'inputImgDim':[None, None, 3],
     'classDim':1000,
@@ -37,10 +35,10 @@ def trainRotClassifier(
     dataset = renderDataset.RenderforCNNDataset(dataPath=datasetPath, classNum=classNum, instNum=instNum, rotDim=rotDim)
     dataset.setImageSize((112, 112))
     #
-    classifier = nolboModule.RenderforCNN_classifier(classNum=classNum,instNum=instNum,rotDim=rotDim)
+    model = classifier.RenderforCNN_classifier(classNum=classNum,instNum=instNum,rotDim=rotDim)
     if restorePath != None:
         print 'restore weights...'
-        classifier.restoreEncoderCore(restorePath)
+        model.restoreEncoderCore(restorePath)
         # classifier.restoreEncoderLastLayer(restorePath)
         # classifier.restoreDecoder(restorePath)
         # classifier.restorePriornet(restorePath)
@@ -68,19 +66,19 @@ def trainRotClassifier(
         dataStart = dataset._dataStart
         dataLength = dataset._dataLength
 
-        if ((iteration+1) % 2000 == 0 and (iteration+1) != 1) or epochCurr != epoch:
+        if epochCurr != epoch :# or ((iteration+1) % 2000 == 0 and (iteration+1) != 1):
             print ''
-            gc.collect()
+            # gc.collect()
             iteration = 0
             loss = loss * 0.0
             run_time = 0.0
             if savePath != None:
                 print 'save model...'
-                classifier.saveNetworks(savePath)
+                model.saveNetworks(savePath)
         epoch = epochCurr
 
         # lossTemp, accTemp = loss, acc
-        lossTemp, classAcc, instAcc, azAcc, azTop5Acc, elAcc, elTop5Acc, ipAcc, ipTop5Acc = classifier.fit(batchData)
+        lossTemp, classAcc, instAcc, azAcc, azTop5Acc, elAcc, elTop5Acc, ipAcc, ipTop5Acc = model.fit(batchData)
         accTemp = np.array([classAcc, instAcc, azAcc, azTop5Acc, elAcc, elTop5Acc, ipAcc, ipTop5Acc])
         end = time.time()
 
@@ -98,7 +96,7 @@ def trainRotClassifier(
 
 if __name__=="__main__":
     sys.exit(trainRotClassifier(
-        batchSize=256,
+        batchSize=512,
         training_epoch = 1000,
         learningRate = 0.1,
         savePath='weights/renderforCNN_classifier/',

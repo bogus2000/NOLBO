@@ -1,5 +1,6 @@
 import numpy as np
 import os, re
+import sys
 
 def atoi(text):
     return int(text) if text.isdigit() else text
@@ -41,10 +42,15 @@ class ObjectNet3D_voxelRotationDataset(object):
         self._vox3DData = None
         self._EulerAngleData = None
         self._vox3DOrg = None
+        self._dataListPerClass = dict()
         self._loadPartition()
 
     def _loadPartition(self):
-        print 'load partition...'
+        print ''
+        print 'load a partition of dataset...'
+        if int(self._curruntPartition+1.0) > self._partitionNum:
+            self._curruntPartition = 0.0
+            self._epoch += 1
         self._classListData = []
         self._instListData = []
         self._vox3DData = []
@@ -52,10 +58,15 @@ class ObjectNet3D_voxelRotationDataset(object):
         self._vox3DOrg = dict()
         classNameList = os.listdir(self._trainingDataPath)
         classNameList.sort(key=natural_keys)
+        # classNum = 1
         for className in classNameList:
             if className in acceptedClassList and \
                     os.path.isdir(os.path.join(self._trainingDataPath, className)):
-                print className
+
+                # print className
+                # sys.stdout.write(className)
+                # sys.stdout.write('{:02d}/{:02d}\r'.format(classNum, 40))
+                # classNum += 1
                 # print 'load class List...'
                 classListDataTemp = np.load(os.path.join(self._trainingDataPath, className, 'classIdx.npy')).astype('bool')
                 # print 'load inst List...'
@@ -65,14 +76,23 @@ class ObjectNet3D_voxelRotationDataset(object):
                 # print 'load Euler angles...'
                 EulerAngleDataTemp = np.load(os.path.join(self._trainingDataPath, className, 'EulerAngle.npy'))
                 # print 'load voxel original...'
+                if self._curruntPartition == 0:
+                    listTemp = np.arange(len(classListDataTemp))
+                    np.random.shuffle(listTemp)
+                    self._dataListPerClass[className] = listTemp
+
                 vox3DOrgTemp = np.load(os.path.join(self._trainingDataPath, className, 'vox3DOrg.npy')).astype('bool')
                 dataLength = len(classListDataTemp)
-                dataStart = int(dataLength * self._curruntPartition / float(self._partitionNum))
-                dataEnd = int(dataLength * (self._curruntPartition + 1.0) / float(self._partitionNum))
-                self._classListData += [classListDataTemp[dataStart:dataEnd].copy()]
-                self._instListData += [instListDataTemp[dataStart:dataEnd].copy()]
-                self._vox3DData += [vox3DDataTemp[dataStart:dataEnd].copy()]
-                self._EulerAngleData += [EulerAngleDataTemp[dataStart:dataEnd].copy()]
+                dataStart = int(dataLength * (self._curruntPartition / float(self._partitionNum)))
+                dataEnd = int(dataLength * ((self._curruntPartition + 1.0) / float(self._partitionNum)))
+                # self._classListData = np.vstack((self._classListData, classListDataTemp[dataStart:dataEnd]))
+                # self._instListData = np.vstack((self._instListData, instListDataTemp[dataStart:dataEnd]))
+                # self._vox3DData = np.vstack((self._vox3DData, vox3DDataTemp[dataStart:dataEnd]))
+                # self._EulerAngleData = np.vstack((self._EulerAngleData, EulerAngleDataTemp[dataStart:dataEnd]/180.0*np.pi))
+                self._classListData += [classListDataTemp[self._dataListPerClass[className][dataStart:dataEnd]].copy()]
+                self._instListData += [instListDataTemp[self._dataListPerClass[className][dataStart:dataEnd]].copy()]
+                self._vox3DData += [vox3DDataTemp[self._dataListPerClass[className][dataStart:dataEnd]].copy()]
+                self._EulerAngleData += [EulerAngleDataTemp[self._dataListPerClass[className][dataStart:dataEnd]].copy()/180.0*np.pi] # angle to radian
                 # print 'data length :', len(self._classListData[-1])
                 classIdx = np.argmax(classListDataTemp[0])
                 self._vox3DOrg[classIdx] = vox3DOrgTemp.copy()
@@ -82,20 +102,19 @@ class ObjectNet3D_voxelRotationDataset(object):
                 del EulerAngleDataTemp
                 del vox3DOrgTemp
         self._curruntPartition += 1.0
-        if int(self._curruntPartition) >= self._partitionNum:
-            self._epoch += 1
-            self._curruntPartition = 0.0
         self._classListData = np.concatenate(self._classListData, axis=0)
         self._instListData = np.concatenate(self._instListData, axis=0)
         self._vox3DData = np.concatenate(self._vox3DData, axis=0)
         self._EulerAngleData = np.concatenate(self._EulerAngleData)
         self._partitionLength = len(self._classListData)
+        # print self._partitionLength
         self._shuffleList = np.arange(self._partitionLength)
         np.random.shuffle(self._shuffleList)
         # self._classListData = self._classListData[s]
         # self._instListData = self._instListData[s]
         # self._vox3DData = self._vox3DData[s]
         # self._EulerAngleData = self._EulerAngleData[s]
+        # print ''
         print 'done!'
 
     def getNextBatch(self, batchSize=32):
@@ -106,12 +125,19 @@ class ObjectNet3D_voxelRotationDataset(object):
         dataEnd = self._batchStart + batchSize
         self._batchStart += batchSize
         dataList = self._shuffleList[dataStart:dataEnd]
+        # batch_dict = {
+        #     'inputImages': np.array([self._vox3DData[i] for i in dataList]).astype('float'),
+        #     'classList': np.array([self._classListData[i] for i in dataList]).astype('float'),
+        #     'instList': np.array([self._instListData[i] for i in dataList]).astype('float'),
+        #     'EulerAngle': np.array([self._EulerAngleData[i] for i in dataList]).astype('float'),
+        #     'outputImages': np.array([self._vox3DData[i] for i in dataList]).astype('float'),
+        # }
         batch_dict = {
-            'inputImages': self._vox3DData[dataList].astype('float'),
-            'classList': self._classListData[dataList].astype('float'),
-            'instList': self._instListData[dataList].astype('float'),
-            'EulerAngle': self._EulerAngleData[dataList].astype('float'),
-            'outputImages' : self._vox3DData[dataList].astype('float')
+            'inputImages': (self._vox3DData[dataList]).astype('float'),
+            'classList': (self._classListData[dataList]).astype('float'),
+            'instList': (self._instListData[dataList]).astype('float'),
+            'EulerAngle': (self._EulerAngleData[dataList]).astype('float'),
+            'outputImages' : (self._vox3DData[dataList]).astype('float'),
         }
         if self._loadVoxOrg:
             vox3DOrgData = []

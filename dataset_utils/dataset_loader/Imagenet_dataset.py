@@ -12,13 +12,15 @@ def imageResize(imagePath, imageSize, bbox):
     if bbox!=None:
         imageBbox = image[bbox[2]:bbox[3], bbox[0]:bbox[1],:]
         if len(imageBbox)==0 or len(imageBbox[0])==0:
-            imageResult = cv2.resize(image, imageSize)
+            imageResult = image
         else:
-            imageResult = cv2.resize(imageBbox, imageSize)
+            imageResult = imageBbox
     else:
-        imageResult = cv2.resize(image, imageSize)
-        imageResult = datasetUtils.imgAug(imageResult)
+        imageResult = image
+    imageResult = datasetUtils.imgAug(imageResult)
+    imageResult = cv2.resize(imageResult, imageSize)
     return imageResult
+
 class imagenetDataset(object):
     def __init__(self, dataPath, classNum=1000):
         self._dataPath = dataPath
@@ -105,7 +107,6 @@ class imagenetDataset(object):
 
         imageSize = [self._imageSize] * batchSize
         inputImages = self._pool.map(imageResize, dataPathTemp, imageSize, bboxList)
-        # inputImages = datasetUtils.imgAug(inputImages)
 
         batchData = {
             'inputImages': np.array(inputImages).astype('float'),

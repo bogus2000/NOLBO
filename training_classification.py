@@ -2,7 +2,7 @@ import numpy as np
 import copy
 import time, sys
 import dataset_utils.dataset_loader.Imagenet_dataset as imagenetDataset
-import src.module.nolbo as nolboModule
+import src.module.classifier as classifier
 import gc
 
 nolboConfig = {
@@ -37,14 +37,14 @@ def trainNolboClassifier(
     dataset = imagenetDataset.imagenetDataset(dataPath=datasetPath, classNum=nolboConfig['classDim'])
     dataset.setImageSize((224, 224))
     #
-    nb = nolboModule.darknet_classifier(classNum=nolboConfig['classDim'])
+    model = classifier.darknet_classifier(classNum=nolboConfig['classDim'])
     if restorePath != None:
         print 'restore weights...'
         # nb.restoreEncoderCore(restorePath)
         # nb.restoreEncoderLastLayer(restorePath)
         # nb.restoreDecoder(restorePath)
         # np.restorePriornet(restorePath)
-        nb.restoreNetworks(restorePath)
+        model.restoreNetworks(restorePath)
 
     loss = 0.0
     acc, top5Acc = 0.0, 0.0
@@ -67,6 +67,7 @@ def trainNolboClassifier(
             batchData = dataset.getNextBatchPar(batchSize=256)
         else:
             batchData = dataset.getNextBatchPar(batchSize=128)
+        # batchData = dataset.getNextBatchPar(batchSize=batchSize)
         batchData['learningRate'] = learningRate
         # learningRate = learningRate*0.99995
         # lr = lr*0.9990
@@ -74,19 +75,19 @@ def trainNolboClassifier(
         dataStart = dataset._dataStart
         dataLength = dataset._dataLength
 
-        if epochCurr != epoch : # or ((iteration+1) % 2000 == 0 and (iteration+1) != 1):
+        if epochCurr != epoch or ((iteration+1) % 1000 == 0 and (iteration+1) != 1):
             print ''
-            gc.collect()
+            # gc.collect()
             iteration = 0
             loss = loss * 0.0
             run_time = 0.0
             if savePath != None:
                 print 'save model...'
-                nb.saveNetworks(savePath)
+                model.saveNetworks(savePath)
         epoch = epochCurr
 
         # lossTemp, accTemp = loss, acc
-        lossTemp, accTemp, top5AccTemp = nb.fit(batchData)
+        lossTemp, accTemp, top5AccTemp = model.fit(batchData)
         end = time.time()
 
         acc = float(acc * iteration + accTemp) / float(iteration + 1.0)
@@ -102,13 +103,12 @@ def trainNolboClassifier(
 
         iteration = iteration + 1.0
 
-
 if __name__=="__main__":
     sys.exit(trainNolboClassifier(
         nolboConfig=nolboConfig,
         batchSize=128,
         training_epoch = 10,
-        learningRate = 0.0001,
+        learningRate = 0.00001,
         savePath='weights/imagenet_classifier/',
         # restorePath=None
         restorePath = 'weights/imagenet_classifier/'

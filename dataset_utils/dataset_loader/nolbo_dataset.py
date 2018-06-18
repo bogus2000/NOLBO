@@ -5,6 +5,7 @@ import time
 import os, random, re, pickle, sys
 import pandas
 import dataset_utils.datasetUtils as datasetUtils
+from pathos.multiprocessing import ProcessingPool as Pool
 
 ###example of nolboConfig for nolboDataset
 # nolboConfig = {
@@ -239,13 +240,23 @@ classDict = {
 }
 
 # from memory_profiler import profile
+def loadImg(imgPath, imgSize, bbox):
+    inputImage = cv2.imread(imgPath, cv2.IMREAD_COLOR)
+    colMin, rowMin, colMax, rowMax = bbox
+    imageCanvas = inputImage[int(rowMin):int(rowMax), int(colMin):int(colMax)]
+    imageResult = datasetUtils.imgAug(imageCanvas,flip=False)
+    imageResult = cv2.resize(imageResult, imgSize)
+    return imageResult
 
+def load3DShape(obj3DShapePath):
+    obj3DShape = np.load(obj3DShapePath)
+    return obj3DShape
 
 class nolboDatasetSingleObject(object):
     def __init__(self, nolboConfig,
                  mode='classification',
                  dataPath_ObjectNet3D=None, dataPath_Pascal3D=None, dataPath_pix3D=None,
-                 loadOrg3DShape = False
+                 loadOrg3DShape = True
                  ):
         self._nolboConfig = nolboConfig
         self._mode = mode
@@ -274,65 +285,67 @@ class nolboDatasetSingleObject(object):
         self._classDict = classDict
         self._instDict_ObjectNet3D = dict()
         self._instDict_pix3D = dict()
-        classList = os.listdir(os.path.join(self._dataPath_ObjectNet3D, 'CAD'))
-        print 'ObjectNet3D...'
-        for orgClassName in classList:
-            if os.path.isdir(os.path.join(self._dataPath_ObjectNet3D, 'CAD', orgClassName)):
-                if orgClassName in self._classConvertion:
-                    className = self._classConvertion[orgClassName]
-                    classIdx = classDict[className]
-                    # print classIdx, className
-                    if className not in self._instDict_ObjectNet3D:
-                        self._instDict_ObjectNet3D[className] = dict()
-                    CADModelList = os.listdir(os.path.join(self._dataPath_ObjectNet3D, 'CAD', orgClassName))
-                    CADModelList.sort()
-                    instIdx = 1
-                    for CADModel in CADModelList:
-                        if CADModel.endswith(".pcd"):
-                            CADModelPath = os.path.join('CAD', orgClassName, os.path.splitext(CADModel)[0])
-                            if CADModelPath not in self._instDict_ObjectNet3D[className]:
-                                self._instDict_ObjectNet3D[className][CADModelPath] = instIdx
-                                instIdx += 1
-        print 'pix3D...'
-        classList = os.listdir(os.path.join(self._dataPath_pix3D, 'model'))
-        for orgClassName in classList:
-            if os.path.isdir(os.path.join(self._dataPath_pix3D, 'model', orgClassName)):
-                if orgClassName in self._classConvertion:
-                    className = self._classConvertion[orgClassName]
-                    classIdx = classDict[className]
-                    # print classIdx, className
-                    if className not in self._instDict_pix3D:
-                        self._instDict_pix3D[className] = dict()
-                    instIdx = 1
-                    for path, dirs, files in os.walk(os.path.join(self._dataPath_pix3D, 'model', orgClassName)):
-                        files.sort()
-                        for fileName in files:
-                            if fileName.endswith('.pcd'):
-                                filePath = os.path.join('model', orgClassName, path.split('/')[-1],
-                                                        os.path.splitext(fileName)[0])
-                                if filePath not in self._instDict_pix3D[className]:
-                                    self._instDict_pix3D[className][filePath] = instIdx
+        if os.path.isdir(os.path.join(self._dataPath_ObjectNet3D, 'CAD')):
+            print 'ObjectNet3D...'
+            classList = os.listdir(os.path.join(self._dataPath_ObjectNet3D, 'CAD'))
+            for orgClassName in classList:
+                if os.path.isdir(os.path.join(self._dataPath_ObjectNet3D, 'CAD', orgClassName)):
+                    if orgClassName in self._classConvertion:
+                        className = self._classConvertion[orgClassName]
+                        classIdx = classDict[className]
+                        # print classIdx, className
+                        if className not in self._instDict_ObjectNet3D:
+                            self._instDict_ObjectNet3D[className] = dict()
+                        CADModelList = os.listdir(os.path.join(self._dataPath_ObjectNet3D, 'CAD', orgClassName))
+                        CADModelList.sort(key=datasetUtils.natural_keys)
+                        instIdx = 1
+                        for CADModel in CADModelList:
+                            if CADModel.endswith(".pcd"):
+                                CADModelPath = os.path.join('CAD', orgClassName, os.path.splitext(CADModel)[0])
+                                if CADModelPath not in self._instDict_ObjectNet3D[className]:
+                                    self._instDict_ObjectNet3D[className][CADModelPath] = instIdx
                                     instIdx += 1
-        print 'dict ready!'
+        if os.path.isdir(os.path.join(self._dataPath_pix3D, 'model')):
+            print 'pix3D...'
+            classList = os.listdir(os.path.join(self._dataPath_pix3D, 'model'))
+            for orgClassName in classList:
+                if os.path.isdir(os.path.join(self._dataPath_pix3D, 'model', orgClassName)):
+                    if orgClassName in self._classConvertion:
+                        className = self._classConvertion[orgClassName]
+                        classIdx = classDict[className]
+                        # print classIdx, className
+                        if className not in self._instDict_pix3D:
+                            self._instDict_pix3D[className] = dict()
+                        instIdx = 1
+                        for path, dirs, files in os.walk(os.path.join(self._dataPath_pix3D, 'model', orgClassName)):
+                            files.sort(key=datasetUtils.natural_keys)
+                            for fileName in files:
+                                if fileName.endswith('.pcd'):
+                                    filePath = os.path.join('model', orgClassName, path.split('/')[-1],
+                                                            os.path.splitext(fileName)[0])
+                                    if filePath not in self._instDict_pix3D[className]:
+                                        self._instDict_pix3D[className][filePath] = instIdx
+                                        instIdx += 1
+            print 'dict ready!'
 
     def _loadDataPath(self):
         print 'load data path...'
         dataFromList = [self._dataPath_Pascal3D, self._dataPath_ObjectNet3D, self._dataPath_pix3D]
         for dataFrom in dataFromList:
-            if dataFrom!=None:
+            if dataFrom!=None and os.path.isdir(os.path.join(dataFrom, 'training_data')):
                 datasetTypeList = os.listdir(os.path.join(dataFrom, 'training_data'))
-                datasetTypeList.sort()
-                # print dataFrom
+                datasetTypeList.sort(key=datasetUtils.natural_keys)
+                print dataFrom
                 for datasetType in datasetTypeList:
                     if os.path.isdir(os.path.join(dataFrom, 'training_data', datasetType)):
                         dataPointList = os.listdir(os.path.join(dataFrom, 'training_data', datasetType))
-                        dataPointList.sort()
-                        # dataPointIdx = 0
+                        dataPointList.sort(key=datasetUtils.natural_keys)
+                        dataPointIdx = 1
                         totalDataPointNum = len(dataPointList)
                         for dataPoint in dataPointList:
                             if os.path.isdir(os.path.join(dataFrom, 'training_data', datasetType, dataPoint)):
                                 objFolderList = os.listdir(os.path.join(dataFrom, 'training_data', datasetType, dataPoint))
-                                objFolderList.sort()
+                                objFolderList.sort(key=datasetUtils.natural_keys)
                                 for objFolder in objFolderList:
                                     objInfoPath = os.path.join(dataFrom, 'training_data', datasetType, dataPoint, objFolder, 'objInfo.txt')
                                     # with open(objInfoPath) as objInfoFilePointer:
@@ -342,14 +355,10 @@ class nolboDatasetSingleObject(object):
                                     #         [dataFrom ,os.path.join(dataFrom, 'training_data', datasetType, dataPoint, objFolder)])
                                     self._dataPathList.append(
                                         [dataFrom, os.path.join(dataFrom, 'training_data', datasetType, dataPoint, objFolder)])
-                #                     sys.stdout.write(datasetType)
-                #                     sys.stdout.write(" ")
-                #                     # sys.stdout.write(" {:05d}/{:05d} ".format(dataPointIdx, totalDataPointNum))
-                #                     sys.stdout.write(os.path.join(dataPoint, objFolder))
-                #                     sys.stdout.write("\r")
-                #         sys.stdout.write("\n")
-                # # sys.stdout.write("\n")
-                del datasetTypeList
+                                    sys.stdout.write(datasetType + " {:05d}/{:05d}\r".format(dataPointIdx, totalDataPointNum))
+                                dataPointIdx += 1
+                        print ''
+                # sys.stdout.write("\n")
         print 'done!'
         self._dataLength = len(self._dataPathList)
 
@@ -362,7 +371,6 @@ class nolboDatasetSingleObject(object):
 
     def setInputImageSize(self, imgSize):
         self._nolboConfig['inputImgDim'] = imgSize
-
 
     def getNextBatch(self, batchSize):
         checkedDataNum = 0
@@ -393,7 +401,6 @@ class nolboDatasetSingleObject(object):
                 objClassVector = np.zeros(self._nolboConfig['classDim'])
                 objClassVector[objClassIdx] = 1
                 classList.append(objClassVector.copy())
-
 
                 #2D image
                 if self._mode == 'nolbo' or self._mode == 'classification':
@@ -456,7 +463,7 @@ class nolboDatasetSingleObject(object):
                     # objAEI = np.array(
                     #     [np.sin(azRad), np.sin(elRad), np.sin(ipRad),
                     #      np.cos(azRad), np.cos(elRad), np.cos(ipRad)])
-                    objAEI = np.array([float(azimuth),float(elevation),float(in_plane_rot)])
+                    objAEI = np.array([float(azimuth),float(elevation),float(in_plane_rot)])/180.0*np.pi # angle to radian
                     AEIAngle.append(objAEI.copy())
 
                     # original 3D Shape (without rotation)
@@ -501,7 +508,94 @@ class nolboDatasetSingleObject(object):
 
         return batchDict
 
+    def getNextBatchPar(self, batchSize):
+        checkedDataNum = 0
+        addedDataNum = 0
+        inputImages = []
+        outputImages, outputImagesOrg = [], []
+        imgPathList = []
+        imgBboxList = []
+        imgSizeList = []
+        obj3DShapePathList, objOrg3DShapePathList = [],[]
+        classList, instList, AEIAngle = [], [], []
+        if self._dataStart + batchSize >= self._dataLength:
+            self._epoch += 1
+            self._dataPathShuffle()
 
+        for dataFromAndPath in self._dataPathList[self._dataStart:]:
+            if addedDataNum>=batchSize:
+                break
+            dataFrom = dataFromAndPath[0]
+            dataPath = dataFromAndPath[1]
+            objInfoPath = os.path.join(dataPath, 'objInfo.txt')
+            obj3DShapePath = os.path.join(dataPath, 'voxel.npy')
+            objOrg3DShapePath = os.path.join(dataPath, 'voxel_org.npy')
+            with open(objInfoPath) as objInfoFilePointer:
+                objInfo = objInfoFilePointer.readline()
+                # objInfoFilePointer.close()
+            objClassOrg, imgPath, CADModelPath,\
+            colMin, rowMin, colMax, rowMax,\
+            azimuth, elevation, in_plane_rot = objInfo.split(" ")
+            if objClassOrg in self._classConvertion:
+                #class index
+                objClass = self._classConvertion[objClassOrg]
+                objClassIdx = self._classDict[objClass] - 1
+                objClassVector = np.zeros(self._nolboConfig['classDim'])
+                objClassVector[objClassIdx] = 1
+                classList.append(objClassVector)
+
+                #inst index
+                pix3DOrPascal = 0
+                instIdx = -1
+                if dataFrom != self._dataPath_pix3D:
+                    instIdx = self._instDict_ObjectNet3D[objClass][CADModelPath]
+                elif dataFrom == self._dataPath_pix3D:
+                    pix3DOrPascal = 1
+                    instIdx = self._instDict_pix3D[objClass][CADModelPath]
+                objInstVector = np.zeros(self._nolboConfig['instDim'])
+                objInstVector[0] = pix3DOrPascal
+                objInstVector[instIdx] = 1
+                instList.append(objInstVector)
+
+                # Euler angle
+                objAEI = np.array([float(azimuth), float(elevation), float(in_plane_rot)])/180.0*np.pi # angle to radian
+                AEIAngle.append(objAEI.copy())
+
+                #2D image path list
+                imgPath = os.path.join(dataFrom, imgPath)
+                imgPathList.append(imgPath)
+
+                #2D image size list
+                imgSize = (self._nolboConfig['inputImgDim'][1], self._nolboConfig['inputImgDim'][0])
+                imgSizeList.append(imgSize)
+
+                # 2D image bbox list
+                bbox = [float(colMin), float(rowMin), float(colMax), float(rowMax)]
+                imgBboxList.append(bbox)
+
+                # 3D shape path list
+                obj3DShapePathList.append(obj3DShapePath)
+                objOrg3DShapePathList.append(objOrg3DShapePath)
+
+                addedDataNum += 1
+            checkedDataNum += 1
+        self._dataStart = self._dataStart+checkedDataNum
+
+        self._pool = Pool()
+        inputImages = self._pool.map(loadImg, imgPathList, imgSizeList, imgBboxList)
+        outputImages = self._pool.map(load3DShape, obj3DShapePathList)
+        outputImagesOrg = self._pool.map(load3DShape, objOrg3DShapePathList)
+
+        batchDict = {
+            'classList' : np.array(classList).astype('float'),
+            'instList' : np.array(instList).astype('float'),
+            'inputImages' : np.array(inputImages).astype('float'),
+            'outputImages' : np.array(outputImages).astype('float'),
+            'outputImagesOrg' : np.array(outputImagesOrg).astype('float'),
+            'AEIAngle' : np.array(AEIAngle).astype('float'),
+        }
+
+        return batchDict
 
 
 

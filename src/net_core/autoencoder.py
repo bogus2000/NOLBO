@@ -62,7 +62,12 @@ class encoder(object):
                 strides = self._stridesList[depth]
                 hidden = self._convEnc(hidden, filters=filterNum, kernelSize=kernelSize, strides=strides)
                 # hidden = self._convEnc(hidden, filters=filterNum, kernelSize=kernelSize, strides=1)
-            hidden = self._conv(hidden, self._filterNumList[totalDepth-1], self._kernelSizeList[totalDepth-1], self._stridesList[totalDepth-1], padding='same', activation=None, trainable=self._trainable, use_bias=True)
+            ''' add additional 3 dimensions for mean sin,cos '''
+            ''' mean: class, inst, sin,cos '''
+            ''' var : class, inst, rad '''
+            ''' mean : 64+64+3+3, var : 64+64+3
+            '''
+            hidden = self._conv(hidden, self._filterNumList[totalDepth-1] + 3, self._kernelSizeList[totalDepth-1], self._stridesList[totalDepth-1], padding='same', activation=None, trainable=self._trainable, use_bias=True)
             if self._lastPool == 'max':
                 hidden = tf.reduce_max(hidden, axis=[1,2,3])
             elif self._lastPool == 'average':
