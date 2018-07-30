@@ -10,7 +10,7 @@ import sys
 #     return tf.maximum(x, alpha * x)
 
 class darknet19_core(object):
-    def __init__(self, nameScope='dartnet19_core',
+    def __init__(self, nameScope='darknet19_core',
                  trainable=True, bnPhase=True, reuse=False, activation = tf.nn.elu):
         self._reuse = reuse
         self._trainable = trainable
@@ -78,12 +78,16 @@ class darknet19_core(object):
         outputs = hiddenC65
         return outputs
 
+
 class encoder(object):
     def __init__(self, outputVectorDim,
-                 nameScope='encoder_singleVectorOutput',
+                 nameScope='encoder_darknet19',
                  trainable=True, bnPhase=True, reuse=False,
                  coreActivation=tf.nn.leaky_relu,
                  lastLayerActivation=None,
+                 lastFilterNumList=[],
+                 lastKernelSizeList=[],
+                 lastStridesList=[],
                  lastLayerPooling='None',
                  ):
         self._outputVectorDim = outputVectorDim
@@ -93,20 +97,37 @@ class encoder(object):
         self._reuse = reuse
         self._coreAct = coreActivation
         self._lastAct = lastLayerActivation
+        self._lastFilterNumList = lastFilterNumList
+        self._lastKernelSizeList = lastKernelSizeList
+        self._lastStridesList = lastStridesList
         self._lastPool = lastLayerPooling
         self.variables = None
         self.update_ops = None
         self.saver = None
         self._darknetCore = None
+    def _conv(self, inputs, filters, kernel_size, activation):
+        hiddenC = tf.layers.conv2d(
+            inputs=inputs, filters=filters, kernel_size=kernel_size,
+            strides=1, padding='same', activation=None, trainable=self._trainable, use_bias=False)
+        hiddenC = tf.layers.batch_normalization(inputs=hiddenC, training=self._bnPhase, trainable=self._trainable)
+        hiddenC = activation(hiddenC)
+        print hiddenC.shape
+        return hiddenC
     def __call__(self, inputImg):
-        print "encoder_singleVectorOutput - "+self._nameScope
+        print "encoder_darknet19 - "+self._nameScope
         self._darknetCore = darknet19_core(activation=self._coreAct,
                                            bnPhase=self._bnPhase,
                                            nameScope=self._nameScope+"_DKCore",
                                            reuse=self._reuse,trainable=self._trainable)
         hidden = self._darknetCore(inputImg)
         with tf.variable_scope(self._nameScope+'_LastConv', reuse=self._reuse):
-            print "encoder_singleVectorOutput_lastLayer - "+self._nameScope
+            print "encoder_darknet19_lastLayer - "+self._nameScope
+            for i in range(len(self._lastKernelSizeList)):
+                hidden = self._conv(inputs=hidden,
+                                    filters=self._lastFilterNumList[i],
+                                    kernel_size=self._lastKernelSizeList[i],
+                                    activation=self._coreAct
+                                    )
             hidden = tf.layers.conv2d(inputs=hidden, filters=self._outputVectorDim, kernel_size=1,
                                       strides=1, padding='same', activation=None,
                                       trainable=self._trainable, use_bias=False)
@@ -114,14 +135,14 @@ class encoder(object):
                 hidden = tf.reduce_max(hidden, axis=[1,2])
             elif self._lastPool == 'average':
                 hidden = tf.reduce_mean(hidden, axis=[1,2])
-            elif self._lastPool == 'None':
+            elif self._lastPool == 'None' or self._lastPool == None:
                 print 'last layer pooling : None'
                 pass
             print hidden.shape
             if self._lastAct!=None:
                 print "last layer activation is", self._lastAct
                 hidden = self._lastAct(hidden)
-            print hidden.shape
+                print hidden.shape
         self._reuse=True
         self.variables = [self._darknetCore.variables, tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope=self._nameScope+'_LastConv')]
         self.update_ops = [self._darknetCore.update_ops, tf.get_collection(tf.GraphKeys.UPDATE_OPS, scope=self._nameScope+'_LastConv')]

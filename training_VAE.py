@@ -38,7 +38,7 @@ networkStructure = {
         'lastLayerActivation':tf.nn.sigmoid
     },
     'prior':{
-        'hiddenLayerNum':2,
+        'hiddenLayerNum':3,
         'trainable':True,
         'activation':tf.nn.elu,
         'constLogVar':0.0,
@@ -46,7 +46,6 @@ networkStructure = {
 }
 
 def trainVAE(networkStructure, batchSize, trainingEpoch, learningRate, savePath, restorePath, loadOrg3DShape=False):
-
     dataPath = '/media/yonsei/120GB_SSD/CAD_training_data_numpy/'
     dataset = vaeDataset.ObjectNet3D_voxelRotationDataset(
         trainingDataPath=dataPath,
@@ -56,10 +55,13 @@ def trainVAE(networkStructure, batchSize, trainingEpoch, learningRate, savePath,
 
     model = vae.VAE3D(network_architecture=networkStructure)
     if restorePath!=None:
+        # model.restoreEncoder(restorePath=restorePath)
+        # model.restorePriornet(restorePath=restorePath)
         model.restoreNetworks(restorePath=restorePath)
     loss = np.zeros(6)
     pr = np.zeros(2)
     epoch = 0
+    epochCurr = 0
     iteration = 0
     run_time = 0.0
 
@@ -72,13 +74,15 @@ def trainVAE(networkStructure, batchSize, trainingEpoch, learningRate, savePath,
         batchData['learningRate'] = learningRate
         inputData = {
             'learningRate' : learningRate,
-            'inputImages' : batchData['outputImages'],
+            'inputImages' : batchData['inputImages'],
             'outputImages' : np.concatenate(
-                [batchData['outputImages'],
-                batchData['outputImages'],
-                 # batchData['outputImages'], #batchData['outputImages'],
-                 batchData['outputImagesOrg'],
-                 ], axis=0),
+                [
+                # batchData['outputImages'],
+                # batchData['outputImages'],
+                # batchData['outputImages'], #batchData['outputImages'],
+                batchData['outputImagesOrg'],
+                # batchData['outputImages'],
+                ], axis=0),
             'classList' : batchData['classList'],
             'instList' : batchData['instList'],
             'EulerAngleSinCos' : np.concatenate(
@@ -92,6 +96,9 @@ def trainVAE(networkStructure, batchSize, trainingEpoch, learningRate, savePath,
             iteration = 0
             loss = loss * 0.0
             run_time = 0.0
+            if savePath != None:
+                print 'save model...'
+                model.saveNetworks(savePath)
         epoch = epochCurr
         lossTemp, prTemp = model.fit(batchDict=inputData)
         lossTemp = np.array(lossTemp)
@@ -113,25 +120,24 @@ def trainVAE(networkStructure, batchSize, trainingEpoch, learningRate, savePath,
         if loss[0] != loss[0]:
             print ''
             return
-
-        if (iteration + 1) % 1000 == 0 and (iteration + 1) != 1:
-            print ''
-            iteration = 0
-            loss = loss * 0.0
-            pr = pr * 0.0
-            run_time = 0.0
-            # learningRate = learningRate*1.1
-            # nb._setOptimizer(learningRate=learningRate)
-            if savePath != None:
-                print 'save model...'
-                model.saveNetworks(savePath)
         iteration = iteration + 1.0
 
+        # if iteration % 1000 == 0 and iteration != 1:
+        #     print ''
+        #     iteration = 0
+        #     loss = loss * 0.0
+        #     pr = pr * 0.0
+        #     run_time = 0.0
+        #     # learningRate = learningRate*1.1
+        #     # nb._setOptimizer(learningRate=learningRate)
+        #     if savePath != None:
+        #         print 'save model...'
+        #         model.saveNetworks(savePath)
 
 if __name__ == "__main__":
     sys.exit(trainVAE(
         networkStructure=networkStructure,
-        batchSize=36,
+        batchSize=96,
         trainingEpoch=1000,
         learningRate=1e-7,
         # learningRate=1e-6,

@@ -1,4 +1,4 @@
-from . import *
+from function import *
 import src.net_core.darknet as darknet
 
 class darknet_classifier(object):

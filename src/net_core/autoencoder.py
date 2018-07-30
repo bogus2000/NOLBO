@@ -61,11 +61,11 @@ class encoder(object):
                 kernelSize = self._kernelSizeList[depth]
                 strides = self._stridesList[depth]
                 hidden = self._convEnc(hidden, filters=filterNum, kernelSize=kernelSize, strides=strides)
-                # hidden = self._convEnc(hidden, filters=filterNum, kernelSize=kernelSize, strides=1)
+                # hidden = self._convEnc(hidden, filters=filterNum/2, kernelSize=1, strides=1)
             ''' add additional 3 dimensions for mean sin,cos '''
             ''' mean: class, inst, sin,cos '''
             ''' var : class, inst, rad '''
-            ''' mean : 64+64+3+3, var : 64+64+3
+            ''' mean : 64+64+3+"3", var : 64+64+3
             '''
             hidden = self._conv(hidden, self._filterNumList[totalDepth-1] + 3, self._kernelSizeList[totalDepth-1], self._stridesList[totalDepth-1], padding='same', activation=None, trainable=self._trainable, use_bias=True)
             if self._lastPool == 'max':
@@ -76,6 +76,7 @@ class encoder(object):
             # hidden = tf.layers.flatten(hidden)
             # print hidden.shape
         self._reuse = True
+        self.trainableVariables = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, scope=self._scopeName)
         self.variables = tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope=self._scopeName)
         self.update_ops = tf.get_collection(tf.GraphKeys.UPDATE_OPS, scope=self._scopeName)
         self.saver = tf.train.Saver(var_list=self.variables)
@@ -134,7 +135,7 @@ class decoder(object):
                 kernelSize = self._kernelSizeList[depth]
                 strides = self._stridesList[depth]
                 hidden = self._convDec(hidden, filters=filterNum, kernelSize=kernelSize, strides=strides)
-                # hidden = self._convDec(hidden, filters=filterNum, kernelSize=kernelSize, strides=1)
+                # hidden = self._convDec(hidden, filters=filterNum/2, kernelSize=1, strides=1)
             hidden = self._convTrans(hidden, self._filterNumList[totalDepth-1], self._kernelSizeList[totalDepth-1], self._stridesList[totalDepth-1], padding='same', activation=None, trainable=self._trainable, use_bias=False)
             print hidden.shape
             if self._lastLayerAct != None:

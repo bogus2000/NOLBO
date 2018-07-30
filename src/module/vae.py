@@ -1,4 +1,4 @@
-from . import *
+from function import *
 import src.net_core.autoencoder as ae
 import src.net_core.priornet as priornet
 
@@ -78,7 +78,8 @@ class VAE3D(object):
         #============ encoder and decoder ============
         self._encoder = ae.encoder(self._enc_arc, encoderName='encoder3D')
         self._decoder = ae.decoder(self._dec_arc, decoderName='nolbo-dec')
-        encOutput = self._encoder(self._inputImages)
+        #====== input voxel value range : [0,1] -> [-1,2]
+        encOutput = self._encoder(2.0*self._inputImages-1.0)
         self._classMeanPred = encOutput[...,0:self._net_arc['zClassDim']]
         self._instMeanPred = encOutput[...,self._net_arc['zClassDim']:self._net_arc['zClassDim']+self._net_arc['zInstDim']]
         self._sinMeanPred = -1.0+2.0*tf.nn.sigmoid(encOutput[...,self._net_arc['zClassDim']+self._net_arc['zInstDim']:self._net_arc['zClassDim']+self._net_arc['zInstDim']+self._net_arc['zRotDim']])
@@ -97,54 +98,72 @@ class VAE3D(object):
         self._logVarsinz = tf.log(self._Varsinz)
         self._logVarcosz = tf.log(self._Varcosz)
 
-        self._zsAll = []
+        #get sincos
+        print 'get sincos'
+        SAEI = sampling(mu=self._Esinz, logVar=self._logVarsinz)
+        CAEI = sampling(mu=self._Ecosz, logVar=self._logVarcosz)
+        # SAEI = sampling(mu=EsinzGT, logVar=VarsinzGT)
+        # CAEI = sampling(mu=EcoszGT, logVar=VarcoszGT)
+        # SAEI = AEISinGT
+        # CAEI = AEICosGT
+        # rotate inversely with negative angles to get a correct coordinate
+        SA,SE,SI = -SAEI[...,0], -SAEI[...,1], -SAEI[...,2]
+        CA,CE,CI = CAEI[...,0], CAEI[...,1], CAEI[...,2]
+        SA = tf.tile(tf.reshape(SA, (-1,1,1,1,1)), (1,64,64,64,1))
+        SE = tf.tile(tf.reshape(SE, (-1, 1, 1, 1, 1)), (1, 64, 64, 64, 1))
+        SI = tf.tile(tf.reshape(SI, (-1, 1, 1, 1, 1)), (1, 64, 64, 64, 1))
+        CA = tf.tile(tf.reshape(CA, (-1, 1, 1, 1, 1)), (1, 64, 64, 64, 1))
+        CE = tf.tile(tf.reshape(CE, (-1, 1, 1, 1, 1)), (1, 64, 64, 64, 1))
+        CI = tf.tile(tf.reshape(CI, (-1, 1, 1, 1, 1)), (1, 64, 64, 64, 1))
+        print CA.shape
+
         # normal output
-        self._meanPred = tf.concat([self._classMeanPred, self._instMeanPred, self._Esinz, self._Ecosz], axis=-1)
-        self._logVarPred = tf.concat([self._classLogVarPred, self._instLogVarPred, self._logVarsinz, self._logVarcosz], axis=-1)
+        print 'get normal output'
+        self._meanPred = tf.concat([self._classMeanPred, self._instMeanPred], axis=-1)
+        self._logVarPred = tf.concat([self._classLogVarPred, self._instLogVarPred], axis=-1)
         self._zs = sampling(mu=self._meanPred, logVar=self._logVarPred)
-        self._zsAll += [self._zs]
+        print self._zs.shape
+        self._outputImages = self._decoder(self._zs)
 
-        # with Euler angle GT
-        AEISinGT = self._EulerAngleGT[..., :3]
-        AEICosGT = self._EulerAngleGT[..., 3:]
-        EsinzGT = tf.exp(-self._radVar / 2.0) * AEISinGT
-        EcoszGT = tf.exp(-self._radVar / 2.0) * AEICosGT
-        VarsinzGT = 0.5-0.5*tf.exp(-2.0*self._radVar)*(1.0-2.0*AEISinGT*AEISinGT)-tf.exp(-self._radVar)*AEISinGT*AEISinGT
-        VarcoszGT = 0.5+0.5*tf.exp(-2.0*self._radVar)*(2.0*AEICosGT*AEICosGT-1.0)-tf.exp(-self._radVar)*AEICosGT*AEICosGT
-        logVarsinzGT = tf.log(VarsinzGT + 1e-8)
-        logVarcoszGT = tf.log(VarcoszGT + 1e-8)
-        self._meanPredEGT = tf.concat([self._classMeanPred, self._instMeanPred, EsinzGT, EcoszGT], axis=-1)
-        self._logVarPredEGT = tf.concat([self._classLogVarPred, self._instLogVarPred, logVarsinzGT, logVarcoszGT], axis=-1)
-        self._zsEGT = sampling(mu=self._meanPredEGT, logVar=self._logVarPredEGT)
-        self._zsAll += [self._zsEGT]
-        #
-        # # with class prior
-        # self._meanPredwithPriorClass = tf.concat([self._classMeanPrior, self._instMeanPrior, EsinzGT, EcoszGT], axis=-1)
-        # self._logVarPredwithPriorClass = tf.concat([self._classLogVarPrior, self._instLogVarPred, logVarsinzGT, logVarcoszGT], axis=-1)
-        # self._zsPriorClass = sampling(mu=self._meanPredwithPriorClass, logVar=self._logVarPredwithPriorClass)
-        # self._zsAll += [self._zsPriorClass]
-        #
-        # # with inst prior
-        # self._meanPredwithPriorInst = tf.concat([self._classMeanPred, self._instMeanPrior, EsinzGT, EcoszGT], axis=-1)
-        # self._logVarPredwithPriorInst = tf.concat([self._classLogVarPred, self._instLogVarPrior, logVarsinzGT, logVarcoszGT], axis=-1)
-        # self._zsPriorInst = sampling(mu=self._meanPredwithPriorInst, logVar=self._logVarPredwithPriorInst)
-        # self._zsAll += [self._zsPriorInst]
-        #
-        # with Euler angle = (0,0,0)
-        self._meanPredOrg = tf.concat(
-            [self._classMeanPred, self._instMeanPred,
-             tf.exp(-self._radVar/2.0)*tf.zeros_like(self._Esinz), tf.exp(-self._radVar/2.0)*tf.ones_like(self._Ecosz)], axis=-1)
-        varsinzZero = (0.5 - 0.5*tf.exp(-2.0*self._radVar))*tf.ones_like(self._radLogVarPred)
-        varcoszZero = (0.5 + 0.5*tf.exp(-2.0*self._radVar) - tf.exp(-self._radVar))*tf.ones_like(self._radLogVarPred)
-        logVarsinzZero = tf.log(varsinzZero + 1e-7)
-        logVarcoszZero = tf.log(varcoszZero + 1e-7)
-        self._logVarPredWithZeroAngle = tf.concat([self._classLogVarPred, self._instLogVarPred, logVarsinzZero, logVarcoszZero], axis=-1)
-        self._zsOrg = sampling(mu=self._meanPredOrg, logVar=self._logVarPred)
-        self._zsAll += [self._zsOrg]
+        batchSize = tf.shape(self._outputImages)[0]
+        #set xyz coordinate
+        print 'set xyz coordinate'
+        yTile = np.reshape(np.array([np.arange(64)] * 64), (64, 64, 1))
+        xTile = np.transpose(yTile, (1, 0, 2))
+        yTile = np.reshape(np.tile(yTile, (1, 1, 64)), (1, 64, 64, 64, 1))
+        xTile = np.reshape(np.tile(xTile, (1, 1, 64)), (1, 64, 64, 64, 1))
+        zTile = np.reshape(np.transpose(xTile, (0, 3, 2, 1, 4)), (1, 64, 64, 64, 1))
+        xTile = tf.tile(tf.cast(tf.constant(xTile), tf.float32) - 63.0/2.0, [batchSize, 1, 1, 1, 1])
+        yTile = tf.tile(tf.cast(tf.constant(yTile), tf.float32) - 63.0/2.0, [batchSize, 1, 1, 1, 1])
+        zTile = tf.tile(tf.cast(tf.constant(zTile), tf.float32) - 63.0/2.0, [batchSize, 1, 1, 1, 1])
+        print xTile.shape
 
-        self._zsAll = tf.concat(self._zsAll, axis=0)
-        print self._zsAll.shape
-        self._outputImages = self._decoder(self._zsAll)
+        # get rotated coordinate
+        print 'get rotated coordinate'
+        xRot = (CA*CI+SA*SE*SI)*xTile + (-SA*CI+CA*SE*SI)*yTile + (CE*SI)*zTile
+        yRot = (SA*CE)*xTile + (CA*CE)*yTile + (-SE)*zTile
+        zRot = (-CA*SI+SA*SE*CI)*xTile + (SA*SI+CA*SE*CI)*yTile + (CE*CI)*zTile
+
+        idxI = tf.cast(xRot + 63.0/2.0 + 0.5, tf.int32)
+        idxJ = tf.cast(yRot + 63.0/2.0 + 0.5, tf.int32)
+        idxK = tf.cast(zRot + 63.0/2.0 + 0.5, tf.int32)
+        idx = tf.concat([idxI,idxJ,idxK], axis=-1)
+        idx = tf.where(idx>0, idx, tf.zeros_like(idx))
+        idx = tf.where(idx<64, idx, tf.zeros_like(idx))
+        print idx.shape
+
+        #get batch index
+        bIdx = tf.transpose(tf.reshape(tf.tile(tf.range(batchSize),[64*64*64*1]), [1,64,64,64,batchSize]))
+
+        #get final index
+        indices = tf.concat([bIdx, idx], axis=-1)
+
+        #get rotated voxels
+        self._outputImagesRotated = tf.gather_nd(params=self._outputImages, indices=indices)
+        print self._outputImagesRotated.shape
+
+        #final voxels
+        # self._outputImages = tf.concat([self._outputImages, self._outputImagesRotated], axis=0)
 
         if self._net_arc['isTraining']:
             self._p, self._r = create_evaluation(xTarget=self._outputImagesGT, xPred=self._outputImages)
@@ -157,14 +176,13 @@ class VAE3D(object):
         print "create loss..."
         self._binaryLoss = tf.reduce_mean(
             binary_loss(xPred=self._outputImages, xTarget=self._outputImagesGT, gamma=0.60, b_range=False))
-        self._regulizerLoss \
-            = tf.reduce_mean(
-            regulizer_loss(z_mean=self._classMeanPrior, z_logVar=self._classLogVarPrior, dist_in_z_space=5.0)
-            +
+        self._cRLoss = tf.reduce_mean(
             regulizer_loss(
-                z_mean=self._instMeanPrior, z_logVar=self._instLogVarPrior,
-                dist_in_z_space=2.0, class_input=self._classListGT)
-        )
+                z_mean=self._classMeanPrior, z_logVar=self._classLogVarPrior,dist_in_z_space=10.0))
+        self._iRLoss = tf.reduce_mean(
+            regulizer_loss(
+                z_mean=self._instMeanPrior, z_logVar=self._instLogVarPrior,dist_in_z_space=5.0, class_input=self._classListGT))
+        self._regulizerLoss = self._cRLoss + self._iRLoss
         AEISinGT = self._EulerAngleGT[...,:3]
         AEICosGT = self._EulerAngleGT[...,3:]
         EsinzGT = tf.exp(-self._radVar/2.0)*AEISinGT
@@ -209,21 +227,22 @@ class VAE3D(object):
 
         self._nlbLoss = (
             (self._classNLBLoss + self._instNLBLoss)
-            +(self._AEINLBLoss)
+            +
+            0.1*(self._AEINLBLoss)
         )
 
         self._totalLoss = (
             self._binaryLoss
-            + 0.1*self._nlbLoss + 0.01*self._regulizerLoss
-            #+ 10.0*self._sincosLoss + 100.0*self._scmse + 10.0*self._varmse
+            + self._nlbLoss + 0.1*(self._cRLoss+self._iRLoss)
+            + 100.0*self._sincosLoss + 1000.0*self._scmse + 100.0*self._varmse
         )
 
     def _setOptimizer(self):
         print "set optimizer..."
         # self._optimizer = tf.train.AdamOptimizer(learning_rate=self._learningRate)
         self._optimizer = tf.train.MomentumOptimizer(learning_rate=self._learningRate, momentum=0.9, use_nesterov=True)
-        self._update_variables = tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope=None)
-        self._update_ops = tf.get_collection(tf.GraphKeys.UPDATE_OPS, scope=None)
+        self._update_variables = tf.get_collection(key=None,scope=None)
+        self._update_ops = tf.get_collection(key=None,scope=None)
         if self._enc_arc['trainable']:
             self._update_variables += self._encoder.variables
             self._update_ops += self._encoder.update_ops

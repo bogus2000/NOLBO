@@ -2,264 +2,27 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c9c7583a-1c39-4f7c-97b9-011b505e7079" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/0.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/1.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/10.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/100.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/101.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/102.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/103.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/104.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/105.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/106.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/107.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/108.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/109.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/11.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/110.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/111.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/112.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/113.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/114.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/115.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/116.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/117.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/118.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/119.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/12.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/120.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/121.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/122.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/123.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/124.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/125.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/126.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/127.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/128.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/129.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/13.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/130.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/131.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/132.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/133.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/134.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/135.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/136.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/137.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/138.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/139.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/14.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/140.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/141.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/142.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/143.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/144.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/145.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/146.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/147.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/148.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/149.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/15.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/150.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/151.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/152.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/153.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/154.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/155.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/156.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/157.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/158.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/159.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/16.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/160.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/161.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/162.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/163.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/164.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/165.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/166.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/167.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/168.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/169.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/17.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/170.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/171.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/172.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/173.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/174.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/175.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/176.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/177.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/178.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/179.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/18.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/180.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/181.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/182.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/183.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/184.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/185.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/186.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/187.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/188.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/189.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/19.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/190.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/191.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/192.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/193.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/194.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/195.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/196.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/197.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/198.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/199.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/2.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/20.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/200.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/201.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/202.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/203.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/204.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/205.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/206.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/207.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/208.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/209.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/21.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/210.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/211.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/212.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/213.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/214.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/215.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/216.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/217.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/218.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/219.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/22.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/220.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/221.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/222.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/223.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/224.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/225.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/226.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/227.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/228.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/229.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/23.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/230.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/231.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/232.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/233.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/234.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/235.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/236.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/237.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/238.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/239.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/24.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/240.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/241.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/242.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/243.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/244.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/245.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/246.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/247.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/248.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/249.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/25.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/250.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/251.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/252.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/253.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/254.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/255.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/26.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/27.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/28.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/29.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/3.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/30.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/31.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/32.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/33.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/34.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/35.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/36.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/37.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/38.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/39.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/4.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/40.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/41.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/42.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/43.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/44.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/45.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/46.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/47.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/48.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/49.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/5.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/50.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/51.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/52.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/53.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/54.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/55.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/56.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/57.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/58.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/59.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/6.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/60.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/61.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/62.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/63.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/64.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/65.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/66.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/67.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/68.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/69.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/7.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/70.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/71.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/72.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/73.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/74.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/75.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/76.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/77.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/78.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/79.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/8.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/80.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/81.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/82.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/83.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/84.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/85.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/86.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/87.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/88.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/89.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/9.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/90.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/91.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/92.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/93.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/94.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/95.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/96.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/97.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/98.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/99.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/nolboTraining.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/weights/VAE3D (사본)/checkpoint" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/weights/VAE3D (사본)/nolbo_classPrior.ckpt.data-00000-of-00001" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/weights/VAE3D (사본)/nolbo_classPrior.ckpt.index" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/weights/VAE3D (사본)/nolbo_classPrior.ckpt.meta" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/weights/VAE3D (사본)/nolbo_decoder.ckpt.data-00000-of-00001" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/weights/VAE3D (사본)/nolbo_decoder.ckpt.index" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/weights/VAE3D (사본)/nolbo_decoder.ckpt.meta" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/weights/VAE3D (사본)/nolbo_encoderCore.ckpt.data-00000-of-00001" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/weights/VAE3D (사본)/nolbo_encoderCore.ckpt.index" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/weights/VAE3D (사본)/nolbo_encoderCore.ckpt.meta" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/weights/VAE3D (사본)/nolbo_instPrior.ckpt.data-00000-of-00001" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/weights/VAE3D (사본)/nolbo_instPrior.ckpt.index" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/weights/VAE3D (사본)/nolbo_instPrior.ckpt.meta" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/weights/imagenet_classifier (사본)/checkpoint" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/weights/imagenet_classifier (사본)/nolbo_encoderCore.ckpt.data-00000-of-00001" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/weights/imagenet_classifier (사본)/nolbo_encoderCore.ckpt.index" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/weights/imagenet_classifier (사본)/nolbo_encoderCore.ckpt.meta" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/weights/imagenet_classifier (사본)/nolbo_encoderLastLayer.ckpt.data-00000-of-00001" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/weights/imagenet_classifier (사본)/nolbo_encoderLastLayer.ckpt.index" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/weights/imagenet_classifier (사본)/nolbo_encoderLastLayer.ckpt.meta" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/VAE3D/nolbo_classPrior.ckpt.data-00000-of-00001" afterPath="$PROJECT_DIR$/weights/VAE3D/nolbo_classPrior.ckpt.data-00000-of-00001" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/VAE3D/nolbo_classPrior.ckpt.index" afterPath="$PROJECT_DIR$/weights/VAE3D/nolbo_classPrior.ckpt.index" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/VAE3D/nolbo_classPrior.ckpt.meta" afterPath="$PROJECT_DIR$/weights/VAE3D/nolbo_classPrior.ckpt.meta" />
@@ -272,18 +35,21 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/VAE3D/nolbo_instPrior.ckpt.data-00000-of-00001" afterPath="$PROJECT_DIR$/weights/VAE3D/nolbo_instPrior.ckpt.data-00000-of-00001" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/VAE3D/nolbo_instPrior.ckpt.index" afterPath="$PROJECT_DIR$/weights/VAE3D/nolbo_instPrior.ckpt.index" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/VAE3D/nolbo_instPrior.ckpt.meta" afterPath="$PROJECT_DIR$/weights/VAE3D/nolbo_instPrior.ckpt.meta" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/imagenet_classifier (사본)/nolbo_encoderCore.ckpt.data-00000-of-00001" afterPath="$PROJECT_DIR$/weights/imagenet_classifier (사본)/nolbo_encoderCore.ckpt.data-00000-of-00001" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/imagenet_classifier (사본)/nolbo_encoderCore.ckpt.index" afterPath="$PROJECT_DIR$/weights/imagenet_classifier (사본)/nolbo_encoderCore.ckpt.index" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/imagenet_classifier (사본)/nolbo_encoderCore.ckpt.meta" afterPath="$PROJECT_DIR$/weights/imagenet_classifier (사본)/nolbo_encoderCore.ckpt.meta" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/imagenet_classifier (사본)/nolbo_encoderLastLayer.ckpt.data-00000-of-00001" afterPath="$PROJECT_DIR$/weights/imagenet_classifier (사본)/nolbo_encoderLastLayer.ckpt.data-00000-of-00001" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/imagenet_classifier (사본)/nolbo_encoderLastLayer.ckpt.index" afterPath="$PROJECT_DIR$/weights/imagenet_classifier (사본)/nolbo_encoderLastLayer.ckpt.index" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/imagenet_classifier (사본)/nolbo_encoderLastLayer.ckpt.meta" afterPath="$PROJECT_DIR$/weights/imagenet_classifier (사본)/nolbo_encoderLastLayer.ckpt.meta" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/imagenet_classifier/nolbo_encoderCore.ckpt.data-00000-of-00001" afterPath="$PROJECT_DIR$/weights/imagenet_classifier/nolbo_encoderCore.ckpt.data-00000-of-00001" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/imagenet_classifier/nolbo_encoderCore.ckpt.index" afterPath="$PROJECT_DIR$/weights/imagenet_classifier/nolbo_encoderCore.ckpt.index" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/imagenet_classifier/nolbo_encoderCore.ckpt.meta" afterPath="$PROJECT_DIR$/weights/imagenet_classifier/nolbo_encoderCore.ckpt.meta" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/imagenet_classifier/nolbo_encoderLastLayer.ckpt.data-00000-of-00001" afterPath="$PROJECT_DIR$/weights/imagenet_classifier/nolbo_encoderLastLayer.ckpt.data-00000-of-00001" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/imagenet_classifier/nolbo_encoderLastLayer.ckpt.index" afterPath="$PROJECT_DIR$/weights/imagenet_classifier/nolbo_encoderLastLayer.ckpt.index" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/imagenet_classifier/nolbo_encoderLastLayer.ckpt.meta" afterPath="$PROJECT_DIR$/weights/imagenet_classifier/nolbo_encoderLastLayer.ckpt.meta" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_classPrior.ckpt.data-00000-of-00001" afterPath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_classPrior.ckpt.data-00000-of-00001" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_classPrior.ckpt.index" afterPath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_classPrior.ckpt.index" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_classPrior.ckpt.meta" afterPath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_classPrior.ckpt.meta" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_decoder.ckpt.data-00000-of-00001" afterPath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_decoder.ckpt.data-00000-of-00001" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_decoder.ckpt.index" afterPath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_decoder.ckpt.index" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_decoder.ckpt.meta" afterPath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_decoder.ckpt.meta" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_encoderCore.ckpt.data-00000-of-00001" afterPath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_encoderCore.ckpt.data-00000-of-00001" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_encoderCore.ckpt.index" afterPath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_encoderCore.ckpt.index" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_encoderCore.ckpt.meta" afterPath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_encoderCore.ckpt.meta" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_encoderLastLayer.ckpt.data-00000-of-00001" afterPath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_encoderLastLayer.ckpt.data-00000-of-00001" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_encoderLastLayer.ckpt.index" afterPath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_encoderLastLayer.ckpt.index" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_encoderLastLayer.ckpt.meta" afterPath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_encoderLastLayer.ckpt.meta" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_instPrior.ckpt.data-00000-of-00001" afterPath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_instPrior.ckpt.data-00000-of-00001" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_instPrior.ckpt.index" afterPath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_instPrior.ckpt.index" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_instPrior.ckpt.meta" afterPath="$PROJECT_DIR$/weights/nolbo_singleObject/nolbo_instPrior.ckpt.meta" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/renderforCNN_classifier/nolbo_encoderCore.ckpt.data-00000-of-00001" afterPath="$PROJECT_DIR$/weights/renderforCNN_classifier/nolbo_encoderCore.ckpt.data-00000-of-00001" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/renderforCNN_classifier/nolbo_encoderCore.ckpt.index" afterPath="$PROJECT_DIR$/weights/renderforCNN_classifier/nolbo_encoderCore.ckpt.index" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/renderforCNN_classifier/nolbo_encoderCore.ckpt.meta" afterPath="$PROJECT_DIR$/weights/renderforCNN_classifier/nolbo_encoderCore.ckpt.meta" />
@@ -291,20 +57,17 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/renderforCNN_classifier/nolbo_encoderLastLayer.ckpt.index" afterPath="$PROJECT_DIR$/weights/renderforCNN_classifier/nolbo_encoderLastLayer.ckpt.index" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/renderforCNN_classifier/nolbo_encoderLastLayer.ckpt.meta" afterPath="$PROJECT_DIR$/weights/renderforCNN_classifier/nolbo_encoderLastLayer.ckpt.meta" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dataset_utils/dataset_loader/Imagenet_dataset.py" afterPath="$PROJECT_DIR$/dataset_utils/dataset_loader/Imagenet_dataset.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dataset_utils/dataset_loader/RenderforCNN_dataset.py" afterPath="$PROJECT_DIR$/dataset_utils/dataset_loader/RenderforCNN_dataset.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.ipynb_checkpoints/test-checkpoint.ipynb" afterPath="$PROJECT_DIR$/.ipynb_checkpoints/test-checkpoint.ipynb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dataset_utils/dataset_loader/nolbo_dataset.py" afterPath="$PROJECT_DIR$/dataset_utils/dataset_loader/nolbo_dataset.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dataset_utils/dataset_loader/vae3D_dataset.py" afterPath="$PROJECT_DIR$/dataset_utils/dataset_loader/vae3D_dataset.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/module/__init__.py" afterPath="$PROJECT_DIR$/src/module/__init__.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/module/classifier.py" afterPath="$PROJECT_DIR$/src/module/classifier.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/module/nolbo.py" afterPath="$PROJECT_DIR$/src/module/nolbo.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/module/vae.py" afterPath="$PROJECT_DIR$/src/module/vae.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net_core/autoencoder.py" afterPath="$PROJECT_DIR$/src/net_core/autoencoder.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net_core/darknet.py" afterPath="$PROJECT_DIR$/src/net_core/darknet.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net_core/priornet.py" afterPath="$PROJECT_DIR$/src/net_core/priornet.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test.ipynb" afterPath="$PROJECT_DIR$/test.ipynb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/training_VAE.py" afterPath="$PROJECT_DIR$/training_VAE.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/training_classification.py" afterPath="$PROJECT_DIR$/training_classification.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/training_rotClassification.py" afterPath="$PROJECT_DIR$/training_rotClassification.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/weights/imagenet_classifier_log.txt" afterPath="$PROJECT_DIR$/weights/imagenet_classifier_log.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/training_nolboSingleObject.py" afterPath="$PROJECT_DIR$/training_nolboSingleObject.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -319,48 +82,35 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="vae3D_dataset.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/dataset_utils/dataset_loader/vae3D_dataset.py">
+      <file leaf-file-name="nolbo.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/module/nolbo.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="598">
-              <caret line="27" column="17" lean-forward="true" selection-start-line="27" selection-start-column="17" selection-end-line="27" selection-end-column="17" />
-              <folding>
-                <element signature="e#0#18#0" expanded="true" />
-                <marker date="1529312608069" expanded="true" signature="255:270" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="vae.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/module/vae.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="663">
-              <caret line="135" column="8" lean-forward="false" selection-start-line="135" selection-start-column="8" selection-end-line="135" selection-end-column="8" />
-              <folding>
-                <element signature="e#0#15#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="training_VAE.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/training_VAE.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="457">
-              <caret line="133" column="20" lean-forward="false" selection-start-line="133" selection-start-column="20" selection-end-line="133" selection-end-column="20" />
+            <state relative-caret-position="131">
+              <caret line="662" column="23" lean-forward="true" selection-start-line="662" selection-start-column="23" selection-end-line="662" selection-end-column="23" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/module/__init__.py">
+      <file leaf-file-name="training_nolboMultiObject.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/training_nolboMultiObject.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1014">
-              <caret line="39" column="0" lean-forward="false" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
+            <state relative-caret-position="561">
+              <caret line="147" column="20" lean-forward="false" selection-start-line="147" selection-start-column="20" selection-end-line="147" selection-end-column="20" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="nolbo_dataset.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/dataset_utils/dataset_loader/nolbo_dataset.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1189">
+              <caret line="479" column="45" lean-forward="false" selection-start-line="479" selection-start-column="45" selection-end-line="479" selection-end-column="45" />
+              <folding>
+                <marker date="1532667645633" expanded="true" signature="25743:26038" ph="..." />
               </folding>
             </state>
           </provider>
@@ -376,6 +126,12 @@
       <find>True</find>
       <find>F</find>
       <find>tf.log</find>
+      <find>cap</find>
+      <find>config['inputImg</find>
+      <find>config['decoder</find>
+      <find>GLOBAL_VARIA</find>
+      <find>GLOBAL</find>
+      <find>1-self._objMask</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -385,25 +141,28 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/dataset_utils/dataset_builder/pretraining.py" />
-        <option value="$PROJECT_DIR$/nolboTraining.py" />
-        <option value="$PROJECT_DIR$/dataset_utils/dataset_loader/nolbo.py" />
         <option value="$PROJECT_DIR$/dataset_utils/datasetUtils.py" />
         <option value="$PROJECT_DIR$/dataset_utils/dataset_loader/Imagenet_dataset.py" />
         <option value="$PROJECT_DIR$/dataset_utils/dataset_loader/RenderforCNN_dataset.py" />
-        <option value="$PROJECT_DIR$/src/module/classifier.py" />
         <option value="$PROJECT_DIR$/training_rotClassification.py" />
-        <option value="$PROJECT_DIR$/src/net_core/darknet.py" />
         <option value="$PROJECT_DIR$/training_classification.py" />
         <option value="$PROJECT_DIR$/test.py" />
-        <option value="$PROJECT_DIR$/src/net_core/priornet.py" />
-        <option value="$PROJECT_DIR$/dataset_utils/dataset_loader/nolbo_dataset.py" />
-        <option value="$PROJECT_DIR$/training_nolboSingleObject.py" />
-        <option value="$PROJECT_DIR$/src/module/nolbo.py" />
-        <option value="$PROJECT_DIR$/src/net_core/autoencoder.py" />
         <option value="$PROJECT_DIR$/src/module/__init__.py" />
+        <option value="$PROJECT_DIR$/src/module/vae_decoderWithRotation.py" />
         <option value="$PROJECT_DIR$/dataset_utils/dataset_loader/vae3D_dataset.py" />
-        <option value="$PROJECT_DIR$/src/module/vae.py" />
         <option value="$PROJECT_DIR$/training_VAE.py" />
+        <option value="$PROJECT_DIR$/dataset_utils/dataset_loader/nolbo.py" />
+        <option value="$PROJECT_DIR$/training_nolboSingleObject.py" />
+        <option value="$PROJECT_DIR$/nolboTraining.py" />
+        <option value="$PROJECT_DIR$/src/net_core/priornet.py" />
+        <option value="$PROJECT_DIR$/src/net_core/autoencoder.py" />
+        <option value="$PROJECT_DIR$/src/module/vae.py" />
+        <option value="$PROJECT_DIR$/src/module/classifier.py" />
+        <option value="$PROJECT_DIR$/src/module/function.py" />
+        <option value="$PROJECT_DIR$/src/net_core/darknet.py" />
+        <option value="$PROJECT_DIR$/dataset_utils/dataset_loader/nolbo_dataset.py" />
+        <option value="$PROJECT_DIR$/src/module/nolbo.py" />
+        <option value="$PROJECT_DIR$/training_nolboMultiObject.py" />
       </list>
     </option>
   </component>
@@ -429,7 +188,6 @@
     </navigator>
     <panes>
       <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -439,20 +197,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="NOLBO" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="NOLBO" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="NOLBO" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="weights" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -540,11 +284,13 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="PyConsoleConfigurable.Python Console" />
+    <property name="SearchEverywhereHistoryKey" value="tf.get_collection(&#9;null&#9;null" />
   </component>
   <component name="PyConsoleOptionsProvider">
     <option name="myPythonConsoleState">
@@ -562,7 +308,7 @@
       </console-settings>
     </option>
   </component>
-  <component name="RunManager" selected="Python.test">
+  <component name="RunManager" selected="Python.training_VAE">
     <configuration default="false" name="nolboTraining" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -593,6 +339,23 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="NOLBO" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="training_VAE" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="NOLBO" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/training_VAE.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
@@ -731,14 +494,16 @@
       <option name="USE_KEYWORD" value="false" />
       <method />
     </configuration>
-    <list size="2">
+    <list size="3">
       <item index="0" class="java.lang.String" itemvalue="Python.nolboTraining" />
       <item index="1" class="java.lang.String" itemvalue="Python.test" />
+      <item index="2" class="java.lang.String" itemvalue="Python.training_VAE" />
     </list>
     <recent_temporary>
-      <list size="2">
-        <item index="0" class="java.lang.String" itemvalue="Python.test" />
-        <item index="1" class="java.lang.String" itemvalue="Python.nolboTraining" />
+      <list size="3">
+        <item index="0" class="java.lang.String" itemvalue="Python.training_VAE" />
+        <item index="1" class="java.lang.String" itemvalue="Python.test" />
+        <item index="2" class="java.lang.String" itemvalue="Python.nolboTraining" />
       </list>
     </recent_temporary>
   </component>
@@ -760,21 +525,21 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="24" width="1855" height="1056" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16765499" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14824797" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.6605505" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5005097" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32925585" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -797,28 +562,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/dataset_utils/datasetUtils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="598">
-          <caret line="27" column="19" lean-forward="false" selection-start-line="27" selection-start-column="19" selection-end-line="27" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/net_core/darknet.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1976">
-          <caret line="81" column="82" lean-forward="false" selection-start-line="81" selection-start-column="82" selection-end-line="81" selection-end-column="82" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/module/classifier.py" />
-    <entry file="file://$PROJECT_DIR$/src/net_core/autoencoder.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/module/nolbo.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -903,31 +646,10 @@
     <entry file="file://$PROJECT_DIR$/data/nolbo.py" />
     <entry file="file://$PROJECT_DIR$/src/net_core/nolbo.py" />
     <entry file="file://$PROJECT_DIR$/pretraining.ipynb" />
-    <entry file="file://$PROJECT_DIR$/dataset_utils/dataset_builder/pretraining.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="182">
-          <caret line="11" column="4" lean-forward="false" selection-start-line="11" selection-start-column="4" selection-end-line="11" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test.ipynb">
-      <provider selected="true" editor-type-id="ipnb-editor">
-        <state>
-          <selected id="11" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/.PyCharmCE2016.3/system/python_stubs/-1247972723/cv2/cv2/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="317">
           <caret line="8252" column="4" lean-forward="false" selection-start-line="8252" selection-start-column="4" selection-end-line="8252" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/datasetLoader_test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -938,20 +660,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dataset_utils/dataset_loader/RenderforCNN_dataset.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="182">
-          <caret line="11" column="34" lean-forward="false" selection-start-line="11" selection-start-column="34" selection-end-line="11" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dataset_utils/datasetUtils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="183">
-          <caret line="62" column="37" lean-forward="false" selection-start-line="62" selection-start-column="37" selection-end-line="62" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/training_rotClassification.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
@@ -959,84 +667,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/nolboTraining.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-389">
-          <caret line="22" column="40" lean-forward="true" selection-start-line="22" selection-start-column="40" selection-end-line="22" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dataset_utils/dataset_loader/nolbo.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-6381">
-          <caret line="90" column="33" lean-forward="true" selection-start-line="90" selection-start-column="33" selection-end-line="90" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/test.py" />
-    <entry file="file://$PROJECT_DIR$/training_nolboSingleObject.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="260">
-          <caret line="126" column="75" lean-forward="false" selection-start-line="126" selection-start-column="75" selection-end-line="126" selection-end-column="75" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dataset_utils/dataset_loader/nolbo_dataset.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="650">
-          <caret line="465" column="122" lean-forward="false" selection-start-line="465" selection-start-column="122" selection-end-line="465" selection-end-column="122" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/module/nolbo.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="26">
-          <caret line="170" column="43" lean-forward="false" selection-start-line="170" selection-start-column="43" selection-end-line="170" selection-end-column="43" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/net_core/priornet.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="78">
-          <caret line="4" column="69" lean-forward="false" selection-start-line="4" selection-start-column="69" selection-end-line="4" selection-end-column="69" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/net_core/darknet.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-156">
-          <caret line="80" column="12" lean-forward="false" selection-start-line="80" selection-start-column="12" selection-end-line="80" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/dataset_utils/dataset_loader/Imagenet_dataset.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="416">
           <caret line="36" column="44" lean-forward="true" selection-start-line="36" selection-start-column="44" selection-end-line="36" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/training_classification.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="677">
-          <caret line="89" column="48" lean-forward="true" selection-start-line="89" selection-start-column="48" selection-end-line="89" selection-end-column="48" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/module/classifier.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2236">
-          <caret line="86" column="14" lean-forward="false" selection-start-line="86" selection-start-column="14" selection-end-line="86" selection-end-column="14" />
-          <folding>
-            <element signature="e#0#15#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1044,54 +679,181 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/net_core/autoencoder.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="416">
-          <caret line="65" column="43" lean-forward="false" selection-start-line="65" selection-start-column="43" selection-end-line="65" selection-end-column="43" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/module/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1014">
-          <caret line="39" column="0" lean-forward="false" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="0">
+          <caret line="105" column="16" lean-forward="true" selection-start-line="105" selection-start-column="16" selection-end-line="105" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/module/vae_decoderWithRotation.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-286">
+          <caret line="105" column="15" lean-forward="false" selection-start-line="105" selection-start-column="15" selection-end-line="105" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dataset_utils/dataset_loader/RenderforCNN_dataset.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="104">
+          <caret line="8" column="81" lean-forward="false" selection-start-line="8" selection-start-column="39" selection-end-line="8" selection-end-column="81" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/dataset_utils/dataset_loader/vae3D_dataset.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="598">
-          <caret line="27" column="17" lean-forward="true" selection-start-line="27" selection-start-column="17" selection-end-line="27" selection-end-column="17" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-            <marker date="1529312608069" expanded="true" signature="255:270" ph="..." />
-          </folding>
+        <state relative-caret-position="130">
+          <caret line="11" column="10" lean-forward="false" selection-start-line="11" selection-start-column="10" selection-end-line="11" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dataset_utils/dataset_builder/pretraining.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="182">
+          <caret line="11" column="4" lean-forward="false" selection-start-line="11" selection-start-column="4" selection-end-line="11" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/datasetLoader_test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dataset_utils/dataset_loader/nolbo.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="327" column="37" lean-forward="true" selection-start-line="327" selection-start-column="37" selection-end-line="327" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nolboTraining.py" />
+    <entry file="file://$PROJECT_DIR$/src/net_core/priornet.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="639">
+          <caret line="63" column="17" lean-forward="true" selection-start-line="63" selection-start-column="17" selection-end-line="63" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dataset_utils/dataset_loader/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dataset_utils/datasetUtils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="239">
+          <caret line="63" column="4" lean-forward="false" selection-start-line="63" selection-start-column="4" selection-end-line="63" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/module/classifier.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="48" column="39" lean-forward="false" selection-start-line="48" selection-start-column="39" selection-end-line="48" selection-end-column="39" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/training_VAE.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="457">
-          <caret line="133" column="20" lean-forward="false" selection-start-line="133" selection-start-column="20" selection-end-line="133" selection-end-column="20" />
+        <state relative-caret-position="2366">
+          <caret line="96" column="29" lean-forward="false" selection-start-line="96" selection-start-column="29" selection-end-line="96" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/training_classification.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="561">
+          <caret line="105" column="24" lean-forward="true" selection-start-line="105" selection-start-column="24" selection-end-line="105" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/training_nolboSingleObject.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="37" column="10" lean-forward="true" selection-start-line="37" selection-start-column="10" selection-end-line="37" selection-end-column="10" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/module/vae.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="663">
-          <caret line="135" column="8" lean-forward="false" selection-start-line="135" selection-start-column="8" selection-end-line="135" selection-end-column="8" />
+        <state relative-caret-position="-704">
+          <caret line="3" column="0" lean-forward="true" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
           <folding>
-            <element signature="e#0#15#0" expanded="true" />
+            <element signature="e#0#22#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/module/function.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1118">
+          <caret line="78" column="46" lean-forward="false" selection-start-line="78" selection-start-column="46" selection-end-line="78" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test.ipynb">
+      <provider selected="true" editor-type-id="ipnb-editor">
+        <state>
+          <selected id="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net_core/autoencoder.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1352">
+          <caret line="57" column="16" lean-forward="false" selection-start-line="57" selection-start-column="16" selection-end-line="57" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net_core/darknet.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2735">
+          <caret line="144" column="16" lean-forward="false" selection-start-line="144" selection-start-column="16" selection-end-line="144" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dataset_utils/dataset_loader/nolbo_dataset.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1189">
+          <caret line="479" column="45" lean-forward="false" selection-start-line="479" selection-start-column="45" selection-end-line="479" selection-end-column="45" />
+          <folding>
+            <marker date="1532667645633" expanded="true" signature="25743:26038" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/training_nolboMultiObject.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="561">
+          <caret line="147" column="20" lean-forward="false" selection-start-line="147" selection-start-column="20" selection-end-line="147" selection-end-column="20" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/module/nolbo.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="131">
+          <caret line="662" column="23" lean-forward="true" selection-start-line="662" selection-start-column="23" selection-end-line="662" selection-end-column="23" />
+          <folding />
         </state>
       </provider>
     </entry>
